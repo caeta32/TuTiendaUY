@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/tutienda-proyecto-taller-php.iml" filepath="$PROJECT_DIR$/.idea/tutienda-proyecto-taller-php.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/TuTienda.iml" filepath="$PROJECT_DIR$/.idea/TuTienda.iml" />
     </modules>
   </component>
 </project>
