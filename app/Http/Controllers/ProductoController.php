@@ -75,7 +75,7 @@ class ProductoController extends Controller
                 $result = $s3->putObject([
                     'Bucket' => $bucketName,
                     'Key'    => $key,
-                    'Body'   => fopen($filePath, 'r'),
+                    'Body'   => fopen($_FILES['imagen']['tmp_name'], 'rb'),
                     'ACL'    => 'public-read',
                 ]);
                 echo "Image uploaded successfully. Image path is: ". $result->get('ObjectURL');
