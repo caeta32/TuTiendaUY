@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Session;
@@ -1096,7 +1095,7 @@ private function msjConfirmacionCompra() {
                                                                                             line-height: 36.4px;
                                                                                             font-size: 21px;
                                                                                         "
-                                                                            >¡Te invitamos a que continues hechando un vistazo!</span>
+                                                                            >¡Te invitamos a que continues echando un vistazo!</span>
                                                                         </p>
                                                                     </div>
                                                                 </td>

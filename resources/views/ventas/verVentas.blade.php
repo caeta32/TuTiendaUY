@@ -35,7 +35,7 @@
                                     <div class="col-3 col-sm-3 col-md-3 col-lg-2 align-self-center mb-3">
                                         <img src="{{ asset($item->rutaImagen) }}" class="img-thumbnail" width="200" height="200" alt="imagen del producto" style="box-shadow:0px 0px 30px #ccc; border-radius: 10px;">
                                         </div>
-                                    <div class="col-sm-9 col-md-9 col-lg-6">
+                                    <div class="col-sm-9 col-md-9 col-lg-6 align-self-center">
                                         <p>
                                             <b>{{ $item->nombreProducto }}</b><br>
                                             <br>

@@ -20,7 +20,7 @@ class CreateProductosTable extends Migration
             $table->string('descripcion', 600);
             $table->double('precio');
             $table->integer('cantidadDisponible');
-            $table->string('rutaImagen', 100);
+            $table->string('rutaImagen', 200);
             $table->timestamps();
 
             $table->foreign('emailVendedor')->references('email')->on('clientes')->onUpdate('cascade')->onDelete('set null');

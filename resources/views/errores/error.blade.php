@@ -47,14 +47,14 @@
                                         <h5>Uno o más productos de los que intentas comprar ya no se encuentran registrados.</h5>
                                     </div>
                                     <div class="row justify-content-center text-center mt-4">
-                                        <p><strong>¡Lamentamos el inconveniente! Te invitamos a que continúes hechando un vistazo.</strong></p>
+                                        <p><strong>¡Lamentamos el inconveniente! Te invitamos a que continúes echando un vistazo.</strong></p>
                                     </div>
                                 @elseif ($error === 'productSoldByMyself')
                                     <div class="row justify-content-center text-center mb-4">
                                         <h5>¡Parece que estás intentando comprar un producto que vendes tú mismo!</h5>
                                     </div>
                                     <div class="row justify-content-center text-center mt-4">
-                                        <p><strong>Esto no se puede realizar, ¡pero te invitamos a que continues hechando un vistazo!</strong></p>
+                                        <p><strong>Esto no se puede realizar, ¡pero te invitamos a que continues echando un vistazo!</strong></p>
                                     </div>
                                 @else
                                     <div class="row justify-content-center text-center mb-4">
