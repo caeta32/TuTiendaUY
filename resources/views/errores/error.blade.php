@@ -1,4 +1,4 @@
-@extends('layouts.masterClienteNonProducts')
+@extends('layouts.masterCliente')
 
 @section('sectionCliente')
     <style>
@@ -12,14 +12,14 @@
         }
     </style>
 
-    <div class="noscrollbar" style="background: #ffa500; height: 100%; overflow: auto;">
+    <div class="noscrollbar" style="background: #EBEBEB; height: 100%; overflow: auto;">
         <br>
         <br>
         <br>
         <br>
         <div class="row justify-content-center mt-4">
             <div class="col-md-8">
-                <div class="card bg-light">
+                <div class="card bg-light" style="box-shadow:0px 0px 15px #777777;">
                     <article class="card-body px-5">
                         <div class="row justify-content-center my-4">
                             <div class="col-lg-7">
@@ -48,6 +48,13 @@
                                     </div>
                                     <div class="row justify-content-center text-center mt-4">
                                         <p><strong>¡Lamentamos el inconveniente! Te invitamos a que continúes hechando un vistazo.</strong></p>
+                                    </div>
+                                @elseif ($error === 'productSoldByMyself')
+                                    <div class="row justify-content-center text-center mb-4">
+                                        <h5>¡Parece que estás intentando comprar un producto que vendes tú mismo!</h5>
+                                    </div>
+                                    <div class="row justify-content-center text-center mt-4">
+                                        <p><strong>Esto no se puede realizar, ¡pero te invitamos a que continues hechando un vistazo!</strong></p>
                                     </div>
                                 @else
                                     <div class="row justify-content-center text-center mb-4">

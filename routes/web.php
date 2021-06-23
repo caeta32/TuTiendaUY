@@ -6,17 +6,6 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProductoController;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('invitado');
 });
@@ -91,11 +80,22 @@ Route::view('/vender', 'ventas.formularioVender');
 
 Route::post("/publicar", [ProductoController::class, 'publicar'])->name('publicarController');
 
-
 Route::get('/publicar/{codigoProd}', function () {
     return view('ventas.publicarProducto');
 })->name('ventas.publicar');
+
+Route::get('/verVentas', [ClienteController::class, 'verVentasDeUsuario']);
+
+Route::view('/verVentasView', 'ventas.verVentas');
 // Fin ventas =============================================================
+
+// Compras ===============================================================
+Route::post('/iniciarCompra', [ProductoController::class, 'iniciarCompra'])->name('iniciarCompra');
+
+Route::post('/comprar', [ProductoController::class, 'comprar'])->name('comprar');
+
+Route::view('/compra-exitosa', 'compras.compraOK');
+// Fin compras =============================================================
 
 // Productos ===============================================================
 Route::get('/productos', function () {
@@ -157,12 +157,6 @@ Route::post('/cart-clear', [CartController::class, 'clear'])->name('cart.clear')
 Route::view('/cart', 'carrito.cart')->name('cart');
 // Fin Carrito =============================================================
 
-// Compras ===============================================================
-Route::post('/iniciarCompra', [ProductoController::class, 'iniciarCompra'])->name('iniciarCompra');
-
-Route::post('/comprar', [ProductoController::class, 'comprar'])->name('comprar');
-
-Route::view('/compra-exitosa', 'compras.compraOK');
-
-Route::view('/compra-erronea', 'compras.errorCompra');
-// Fin compras =============================================================
+// Errores =====================================================================
+Route::view('/error', 'errores.error');
+// FIN Errores =====================================================================

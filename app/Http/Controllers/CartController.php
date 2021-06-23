@@ -22,6 +22,8 @@ class CartController extends Controller
     }
 
     public function cart() {
+        // Se obtiene usuario para saber su email.
+        $usuario = session()->get('usuario', 'default');
         $cartCollection = \Cart::getContent();
         $failedStockInCart = array();
 
@@ -38,13 +40,23 @@ class CartController extends Controller
                         'codigo' => strval($item->id),
                         'reason' => 'exceededStock'
                     ];
+                } elseif ($producto->emailVendedor === $usuario->email) {
+                    $failedStockInCart[] = [
+                        'codigo' => strval($item->id),
+                        'reason' => 'productSoldByMyself'
+                    ];
                 }
             }
         }
 
-        if(!empty($failedStockInCart))
+        if(!empty($failedStockInCart)) {
             session()->put(['failedStockInCart' => $failedStockInCart]);
-            session()->put(['cartCollection' => $cartCollection]);
+        } else {
+            // Si no se encontraron problemas con el stock y la cantidad agregada
+            // se asegura de que no hayan mensajes relacionados con estos errores.
+            session()->forget('failedStockInCart');
+        }
+        
         return redirect()->route('cart');
     }
 

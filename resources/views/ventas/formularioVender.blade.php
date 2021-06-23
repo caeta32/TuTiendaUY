@@ -67,7 +67,7 @@
                     </div>
                     <div class="form-group">
                         <label for="precio" class="control-label">Defina el precio:</label>
-                        <input name="precio" id="precio" class="form-control" placeholder="0.00" type="number" step="0.01" min="0" value="@if(!empty($datos))@php echo floatval($datos[3]); @endphp@endif"" required>
+                        <input name="precio" id="precio" class="form-control" placeholder="0.00" type="number" step="0.01" min="0" value="@if(!empty($datos))@php echo floatval($datos[3]); @endphp@endif" required>
                         <small id="descripcionHelp" class="form-text text-muted">En pesos Uruguayos (UYU).</small>
                     </div>
                     <div class="form-group">
@@ -90,5 +90,3 @@
     {{-- FIN FOOTER --}}
 </div>
 @endSection
-
-

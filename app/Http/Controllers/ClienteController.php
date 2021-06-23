@@ -2,17 +2,84 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Cliente;
-use App\Models\Confirmacion;
-use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\DB;
 
+// Models
+use App\Models\Cliente;
+use App\Models\Confirmacion;
+use App\Models\Pedido;
+use App\Models\Usuario;
+use Exception;
 
 class ClienteController extends Controller
 {
-    function login(Request $request)
+    public function verVentasDeUsuario() {
+      try {
+        // Consulta SQL para los pedidos cuyo estado de envío es en espera y están asociados 
+        // al usuario de la sesión con el rol de comprador
+        $pedidosEnEspera = DB::table('pedidos_contienen_prods as pedidos_prods')
+                      ->join('pedidos as p', 'pedidos_prods.idPedido', '=', 'p.id')
+                      ->join('productos as prods', function ($join) {
+                          // Se obtiene usuario para saber su email.
+                          $usuario = session()->get('usuario', 'default');
+
+                          $join->on('pedidos_prods.codigoProducto', '=', 'prods.codigo')
+                              ->where('prods.emailVendedor', '=', $usuario->email);
+                      })
+                      ->join('clientes as c', 'c.email', '=', 'p.emailComprador')
+                      ->join('envios_en_esperas as e', 'e.idEnvio', '=', 'p.idEnvio')
+                      ->whereNotIn('p.idEnvio', function ($query) {
+                        $query->select('env_desp.idEnvio')->from('envio_despachados as env_desp');
+                      })
+                      ->select(
+                        'pedidos_prods.cantidadPedida',
+                        'p.id as idPedido',
+                        'p.created_at as fechaPedido',
+                        'p.emailComprador',                       
+                        'c.nombre as nombreUsuario',
+                        'e.idEnvio as idEnvio',
+                        'e.created_at as fechaEnvio',
+                        'prods.nombre as nombreProducto', 
+                        'prods.precio', 
+                        'prods.rutaImagen'
+                      )
+                      ->get();
+        // Consulta SQL para los pedidos cuyo estado de envío es despachado y están asociados 
+        // al usuario de la sesión con el rol de comprador
+        $pedidosDespachados = DB::table('pedidos_contienen_prods as pedidos_prods')
+                        ->join('pedidos as p', 'pedidos_prods.idPedido', '=', 'p.id')
+                        ->join('productos as prods', function ($join) {
+                            // Se obtiene usuario para saber su email.
+                            $usuario = session()->get('usuario', 'default');
+
+                            $join->on('pedidos_prods.codigoProducto', '=', 'prods.codigo')
+                                ->where('prods.emailVendedor', '=', $usuario->email);
+                        })
+                        ->join('envio_despachados as e', 'e.idEnvio', '=', 'p.idEnvio')
+                        ->join('clientes as c', 'c.email', '=', 'p.emailComprador')
+                        ->select(
+                          'pedidos_prods.cantidadPedida',
+                          'p.id as idPedido',
+                          'p.created_at as fechaPedido',
+                          'p.emailComprador',
+                          'c.nombre as nombreUsuario',
+                          'e.idEnvio as idEnvio',
+                          'e.created_at as fechaEnvio',
+                          'prods.nombre as nombreProducto', 
+                          'prods.precio', 
+                          'prods.rutaImagen'
+                        )
+                        ->get();
+        return view('ventas.verVentas')->with('data', ['pedidosEnEspera' => $pedidosEnEspera, 'pedidosDespachados' => $pedidosDespachados]);
+      } catch (Exception $e) {
+        // Tratar excepción
+        return view('errores.errorIframe')->with('error', $e->getMessage());
+      }
+    }
+    
+    public function login(Request $request)
     {
         $usuario = Cliente::where(['email' => $request->email])->first();
         // Chequea si el usuario existe, su password y si esta confirmado.
@@ -29,7 +96,7 @@ class ClienteController extends Controller
         }
     }
 
-    function registro(Request $request)
+    public function registro(Request $request)
     {
         // Creación Usuario
         $usu = new Usuario;
@@ -450,7 +517,7 @@ a[x-apple-data-detectors="true"] {
     }
 
     //Manda el usuario creado a espera, hasta que se confirme el mismo
-    function confirmar(Request $request)
+    public function confirmar(Request $request)
     {
         $confirmacion = Confirmacion::where(['codigo' => $request->codigo])->first();
         if ($confirmacion) {
