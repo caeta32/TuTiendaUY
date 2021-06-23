@@ -20,7 +20,7 @@ class CreateProductosTable extends Migration
             $table->string('descripcion', 600);
             $table->double('precio');
             $table->integer('cantidadDisponible');
-            $table->string('rutaImagen', 100);
+            $table->string('rutaImagen', 200);
             $table->timestamps();
 
             $table->foreign('emailVendedor')->references('email')->on('clientes')->onUpdate('cascade')->onDelete('set null');
@@ -42,10 +42,6 @@ class CreateProductosTable extends Migration
             $table->foreign('emailComprador')->references('email')->on('clientes')->onUpdate('cascade')->onDelete('set null');
             $table->foreign('idEnvio')->references('id')->on('envios')->onUpdate('cascade')->onDelete('set null');
         });
-
-
-
-
     }
 
     /**
@@ -56,6 +52,7 @@ class CreateProductosTable extends Migration
     public function down()
     {
         Schema::dropIfExists('productos');
+        Schema::dropIfExists('envios');
         Schema::dropIfExists('pedidos');
     }
 }

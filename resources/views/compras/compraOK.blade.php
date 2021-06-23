@@ -1,6 +1,18 @@
 @extends('layouts.masterCliente')
 
 @section('sectionCliente')
+
+<style>
+    .noscrollbar::-webkit-scrollbar {
+        display: none;
+    }
+
+    .noscrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+    }
+</style>
+
     <div style="background: #EBEBEB; height: 100%; overflow: auto;">
         <br>
         <br>
@@ -57,6 +69,4 @@
         </div>
         {{-- FIN FOOTER --}}
     </div>
-
 @endsection
-

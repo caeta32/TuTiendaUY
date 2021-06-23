@@ -1,5 +1,5 @@
 <?php use Illuminate\Support\Arr; ?>
-@extends('layouts.masterClienteNonProducts')
+@extends('layouts.masterCliente')
 
 @section('sectionCliente')
     <style>
@@ -30,35 +30,9 @@
             <div class="col-md-11">
                 <div class="card bg-light" style="box-shadow:0px 0px 15px #777777;">
                     <article class="card-body px-5">
-                        {{-- MANEJO DE ERRORES =====================================================================================--}}
-                        @if (session()->has('errors'))
-                            @php
-                                $errors = array();
-                                $errors = session()->pull('errors');
-                            @endphp
-                            <div class="row justify-content-center align-items-center my-auto">
-                                <div class="col-md-auto">
-                                    <div class="alert alert-danger alert-dismissible fade show text-center" role="alert">
-                                        @if (Arr::first($errors) === 'failed stock')
-                                            <h4>Parece que ha ocurrido un error.</h4>
-                                            <p><strong>Uno o más productos de los que intentas comprar superan el stock disponible.</strong></p>
-                                            <p>Intenta comprar menos cantidad o consultar el stock disponible desde la publicación correspondiente.</p>
-                                        @elseif (Arr::first($errors) === 'failed product')
-                                            <h4>Parece que ha ocurrido un error.</h4>
-                                            <p><strong>Uno o más productos de los que intentas comprar ya no se encuentran registrados.</strong></p>
-                                            <p>¡Lamentamos el inconveniente! Te invitamos a que continúes hechando un vistazo.</p>
-                                        @endif
-                                        <button type="button" class="close" data-bs-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        @endif
-                        {{--FIN MANEJO DE ERRORES =====================================================================================--}}
 
                         @if (isset($orderData))
-                            {{-- CASO EN QUE EL USUARIO INTENTE COMPRAR DESDE EL CARRITO CON STOCK DEMÁS ==========================--}}
+    {{-- CASO EN QUE EL USUARIO INTENTE COMPRAR DESDE EL CARRITO CON ALGÚN PROBLEMA ==========================--}}
                             @if (session()->has('failedStockInCart') && $orderData['cartBool'] === 'true')
                                 <div class="row justify-content-center my-4">
                                     <div class="col-lg-7">
@@ -75,10 +49,10 @@
                                             </div>
                                         </div>
                                         <div class="row justify-content-center text-center mb-4">
-                                            <h5>Parece que estás intentando hacer una compra desde tu carrito y uno o más productos de los que has agregado sobrepasan el stock disponible.</h5>
+                                            <h5>Parece que estás intentando hacer una compra desde tu carrito y hay algún inconveniente con uno o más productos de los que has agregado.</h5>
                                         </div>
                                         <div class="row justify-content-center text-center mt-4">
-                                            <p><strong>¡No te preocupes! Vuelve a tu carrito para poder solucionarlo rápidamente y realizar tu compra.</strong></p>
+                                            <p><strong>¡No te preocupes! Vuelve a tu carrito para poder ver el problema, solucionarlo rápidamente y realizar tu compra.</strong></p>
                                         </div>
                                         <div class="row justify-content-center">
                                             <a href="{{route('cart.checkout')}}" class="btn btn-success">Volver a tu Carrito</a>
@@ -87,10 +61,10 @@
                                     </div>
                                 </div>
                             @else
-                                {{-- FIN CASO EN QUE EL USUARIO INTENTE COMPRAR DESDE EL CARRITO CON STOCK DEMÁS ==========================--}}
+    {{-- FIN CASO EN QUE EL USUARIO INTENTE COMPRAR DESDE EL CARRITO CON ALGÚN PROBLEMA ==========================--}}
 
-                                {{-- Comienzo --}}
-                                {{-- ------------------------------------------------------------------------------------------------------- --}}
+    {{-- Comienzo --}}
+    {{-- ------------------------------------------------------------------------------------------------------- --}}
                                 <div class="row justify-content-center align-items-center mt-3 mb-4" >
                                     <div class="col-lg-12 px-5">
                                         {{-- Título --}}
@@ -108,7 +82,7 @@
                                                         <h3 class="font-weight-bold">Resumen del pedido</h3>
                                                     </div>
                                                     <div class="row justify-content-center mt-3 mb-2">
-                                                        <h5>Cantidad de Productos: 345</h5>
+                                                        <h5>Cantidad de Productos: {{Arr::get($orderData, 'totalQuantity')}}</h5>
                                                     </div>
                                                     <div class="row justify-content-center my-2">
                                                         <div class="col-md-10">
@@ -123,48 +97,48 @@
                                                     </div>
                                                     <div class="row justify-content-center">
                                                         <div class="col-md-12">
-                                                            {{-- Listado de productos que el usuario puede visualizar expandiendo --}}
-                                                            {{-- ===================================================================================================== --}}
+                        {{-- Listado de productos que el usuario puede visualizar expandiendo --}}
+        {{-- ===================================================================================================== --}}
                                                             <div class="collapse mt-3" id="products">
                                                                 <div class="row justify-content-center">
                                                                     <div class="col-lg-12">
                                                                         @foreach(Arr::get($orderData, 'products') as $item)
                                                                             {{-- Se almacena el id y cantidad de cada producto Para ser usado en caso de que el usuario confirme su compra. --}}
                                                                             @php
-                                                                                $products[] = json_encode(['id' => $item->id, 'quantity' => $item->quantity]);
+                                                                                $products[] = json_encode(['id' => Arr::get($item, 'id'), 'quantity' => Arr::get($item, 'quantity')]);
                                                                             @endphp
                                                                             {{-- ---------------------------------------- --}}
                                                                             <div class="row justify-content-start align-items-center px-3">
                                                                                 <div class="col-lg-2">
-                                                                                    <img src="{{ asset($item->attributes->pathImage) }}" class="img-fluid rounded" width="80" height="80" alt="imagen del producto">
+                                                                                    <img src="{{ asset(Arr::get($item, 'pathImage')) }}" class="img-fluid rounded" width="80" height="80" alt="imagen del producto">
                                                                                 </div>
                                                                                 <div class="col-lg-9">
                                                                                     <div>
-                                                                                        <b>{{ $item->name }}</b><br>
-                                                                                        <b>Precio: </b>$ {{ $item->price }}<br>
-                                                                                        <b>Cantidad: </b>{{$item->quantity}}<br>
+                                                                                        <b>{{ Arr::get($item, 'name') }}</b><br>
+                                                                                        <b>Precio: </b>$ {{ Arr::get($item, 'price') }}<br>
+                                                                                        <b>Cantidad: </b>{{Arr::get($item, 'quantity')}}<br>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
                                                                             <div class="row d-flex justify-content-between align-items-center border rounded mx-1 my-3 px-3 py-2">
                                                                                 <strong>Sub Total: </strong>
-                                                                                <span>$ {{ \Cart::get($item->id)->getPriceSum() }}</span>
+                                                                                <span>$ {{ Arr::get($item, 'priceSum') }}</span>
                                                                             </div>
                                                                         @endforeach
                                                                     </div>
                                                                 </div>
                                                             </div> {{--Fin collapse--}}
-                                                            {{-- ===================================================================================================== --}}
+        {{-- ===================================================================================================== --}}
                                                         </div>
                                                     </div>
                                                     <ul class="list-group mt-4">
                                                         <li class="list-group-item d-flex justify-content-between align-items-center bg-light">
                                                             <strong>Precio Total:</strong>
                                                             <span>
-                                                            @php
-                                                                echo '$ ' ,intval(Arr::get($orderData, 'totalPrice')) + intval(Arr::get($orderData, 'shippingPrice'));
-                                                            @endphp
-                                                        </span>
+                                                                @php
+                                                                    echo '$ ' ,intval(Arr::get($orderData, 'totalPrice')) + intval(Arr::get($orderData, 'shippingPrice'));
+                                                                @endphp
+                                                            </span>
                                                         </li>
                                                     </ul>
                                                 </div>
@@ -238,7 +212,7 @@
                                     </div>
                                 </div>
                             @endif
-                            {{-- ------------------------------------------------------------------------------------------------------- --}}
+    {{-- ------------------------------------------------------------------------------------------------------- --}}
                         @else
                             {{-- NO EXISTE LA INFORMACIÓN DEL PEDIDO --}}
                             {{-- Puede ocurrir por recargar la página o intentar acceder a la página sin haber hecho pedido --}}

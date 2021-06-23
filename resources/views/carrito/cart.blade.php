@@ -20,7 +20,7 @@
         <div class="container" style="margin-top: 2%; max-width: 100%;">
             <div class="card bg-light" style="box-shadow:0px 0px 15px #777777;">
                 <article class="card-body" style="max-width: 100%; display: inline; margin-left: 5%; margin-right: 5%;">
-                    {{-- --------------------------------------------------------------------------------------------------------- --}}
+{{-- --------------------------------------------------------------------------------------------------------- --}}
                     <div class="container">
                         <h1 style="text-align: center">Tu Carrito</h1>
                         <hr style=" width:75%; margin: auto;">
@@ -101,6 +101,9 @@
                                                                 <b>¡Lo sentimos! No hay suficiente stock del siguiente producto disponible.</b>
                                                                 <p>La cantidad del producto <strong>{{$item->name}}</strong> que has agregado al carrito excede su stock disponible.</p>
                                                                 <p>Edita la cantidad o consulta su stock disponible accediendo a su publicación.</p>
+                                                            @elseif (Arr::get($failed, 'reason') === 'productSoldByMyself')
+                                                                <b>¡Parece que este producto lo estás vendiendo tú!</b>
+                                                                <p>Elimina este producto de tu carrito para poder realizar tu compra.</p>
                                                             @endif
                                                         </div>
                                                     </div>
@@ -118,21 +121,21 @@
                                                     <b>{{ $item->name }}</b><br>
                                                     <b>Precio: </b>{{ $item->price }}<br>
                                                     <b>Sub Total: </b>{{ \Cart::get($item->id)->getPriceSum() }}<br>
-                                                {{--                                <b>With Discount: </b>${{ \Cart::get($item->id)->getPriceSumWithConditions() }}--}}
-                                                <form action="{{ route('cart.update') }}" method="POST">
-                                                    @csrf
-                                                    <div class="form-group row">
-                                                        <input type="hidden" value="{{$item->id}}" id="id" name="id">
-                                                        <input type="hidden" value="{{$item->name}}" id="name" name="name">
-                                                        <label for="quantity" class="col-sm-auto form-control-label">
-                                                            <strong>Cantidad:</strong>
-                                                        </label>
-                                                        <input type="number" class="form-control form-control-sm mr-0" value="{{$item->quantity}}" id="quantity" name="quantity" style="width: 70px; margin-right: 10px;">
-                                                        <div class="col-sm">
-                                                            <button class="btn btn-secondary btn-sm" style="margin-right: 25px;"><i class="fa fa-edit"></i>  Editar</button>
+                                                    {{--                                <b>With Discount: </b>${{ \Cart::get($item->id)->getPriceSumWithConditions() }}--}}
+                                                    <form action="{{ route('cart.update') }}" method="POST">
+                                                        @csrf
+                                                        <div class="form-group row">
+                                                            <input type="hidden" value="{{$item->id}}" id="id" name="id">
+                                                            <input type="hidden" value="{{$item->name}}" id="name" name="name">
+                                                            <label for="quantity" class="col-sm-auto form-control-label">
+                                                                <strong>Cantidad:</strong>
+                                                            </label>
+                                                            <input type="number" class="form-control form-control-sm mr-0" value="{{$item->quantity}}" id="quantity" name="quantity" style="width: 70px; margin-right: 10px;">
+                                                            <div class="col-sm">
+                                                                <button class="btn btn-secondary btn-sm" style="margin-right: 25px;"><i class="fa fa-edit"></i>  Editar</button>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </form>
+                                                    </form>
                                                 </p>
                                             </div>
                                             <div class="col-lg-2">
@@ -175,7 +178,6 @@
                                         <div class="col-sm-auto mx-auto my-2">
                                             <form action="{{ route('iniciarCompra') }}" method="post">
                                                 @csrf
-                                                {{-- Se pasa como un objeto JSON en formato string --}}
                                                 <input type="hidden" name="products" id="products" value="{{\Cart::getContent()}}">
 
                                                 <input type="hidden" name="totalPrice" id="totalPrice" value="{{\Cart::getTotal()}}">
@@ -195,7 +197,7 @@
 
 
                     </div>
-                    {{-- --------------------------------------------------------------------------------------------------------- --}}
+{{-- --------------------------------------------------------------------------------------------------------- --}}
                 </article>
             </div> <!-- card.// -->
         </div> {{-- container// --}}

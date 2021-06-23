@@ -12,15 +12,21 @@
             <article class="card-body mx-auto" style="max-width: 1000px; display: inline; text-align: center">
                 <h1>Panel de Control</h1>
                 <div style="text-align: center">
-                    <hr style=" width:75%; margin:0 auto;"> <a class="navbar-brand" href="{{ url('/datospersonales') }}" target="miiframe" style=" font-size: large;">Mis Datos</a> <a class="navbar-brand" href="#" target="miiframe" style=" font-size: large;">Compras</a> <a class="navbar-brand" href="#" target="miiframe" style=" font-size: large;">Ventas</a> <a class="navbar-brand" href="{{ url('/verprod') }}" target="miiframe" style=" font-size: large;">Productos</a> </div>
+                    <hr style=" width:75%; margin:0 auto;"> 
+                    <a class="navbar-brand" href="{{ url('/datospersonales') }}" target="miiframe" style=" font-size: large;">Mis Datos</a> 
+                    <a class="navbar-brand" href="#" target="miiframe" style=" font-size: large;">Compras</a> 
+                    <a class="navbar-brand" href="{{ url('/verVentas') }}" target="miiframe" style=" font-size: large;">Ventas</a> 
+                    <a class="navbar-brand" href="{{ url('/verprod') }}" target="miiframe" style=" font-size: large;">Productos</a> 
+                </div>
             </article>
             <iframe name="miiframe" scrolling="no" frameborder="0" style="
-top: 0;
-bottom: 0;
-left: 0;
-right: 0;
-height: 100%;
-width: 100%;"> </iframe>
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            width: 100%;"> 
+            </iframe>
         </div>
         <!-- card.// -->
     </div>

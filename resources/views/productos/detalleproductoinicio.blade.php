@@ -91,7 +91,7 @@ use Illuminate\Support\Facades\Session;
                     {{-- ==================================================== --}}
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                     {{-- ==================================================== --}}
                     {{-- Los otros campos del form y el submit correspondiente --}}
                     <input type="hidden" value="{{$producto->codigo}}" id="codigo" name="codigo">
@@ -111,32 +111,54 @@ use Illuminate\Support\Facades\Session;
 {{-- FIN MODAL CARRITO --}}
 {{-- ================================================================= --}}
 
+{{-- ================================================================= --}}
+{{-- MODAL COMPRAR --}}
 <div class="modal fade" id="confirmacionCompra" tabindex="-1" aria-labelledby="confirmacionCompra" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
         <div class="modal-content" style="margin-top: -60%">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Confirmacion de compra del producto: {{$producto->nombre}}.</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Comprar el producto: {{$producto->nombre}}.</h5>
                 <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <p><strong>¿Desea proceder al pago?</strong></p>
-                <b>CANTIDAD: <input style="width: 20%" type="number" max="{{$producto->cantidadDisponible}} required"></b>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Seguir Comprando</button>
-            <!--<form action="{{ route('productos.eliminarProd', $producto->codigo) }}" method="POST">
-                    @method('DELETE')
-            @csrf -->
-                <button type="submit" class="btn btn-success">Proceder al pago</button>
-                <!--</form>-->
-            </div>
+            {{-- FORMULARIO --}}
+            {{-- En este caso, sólo necesita enviarse la cantidad pedida (totalQuantity), 
+            el objeto del modelo de producto como un objeto json formateado a string (products) 
+            y el string cartBool con el valor "false". El precio total es calculado por la 
+            función del controlador. --}}
+            <form action="{{route('iniciarCompra')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <p><strong>¡Ya estás cerca de comprar este producto!</strong></p>
+                    {{-- ==================================================== --}}
+                    {{-- Primer campo del form --}}
+                    <label for="quantity">Indique la cantidad que desea comprar: </label>
+                    <input type="number" min="1" max="{{$producto->cantidadDisponible}}" id="totalQuantity" name="totalQuantity" required>
+                    {{-- ==================================================== --}}
+                </div>
+                <div class="modal-footer">
+                    {{-- ==================================================== --}}
+                    {{-- Los otros campos del form, más el formateo de los datos del producto 
+                        y el submit correspondiente --}}
+                    @php
+                        // Se formatea el producto para ser enviado.
+                        $productToSend = json_encode($producto);
+                    @endphp
+                    <input type="hidden" name="products" id="products" value="{{$productToSend}}" />
+                    <input type="hidden" name="cartBool" id="cartBool" value="false" />
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="submit" class="btn btn-primary tooltip-test" title="comprar">
+                        <i class="fas fa-dollar-sign"></i> Continuar
+                    </button>
+                    {{-- ==================================================== --}}
+                </div>
+            </form>
+            {{-- FIN FORMULARIO --}}
         </div>
     </div>
 </div>
-{{-- FIN MODAL --}}
+{{-- FIN MODAL COMPRAR --}}
 {{-- ================================================================= --}}
 </body>
 </html>
