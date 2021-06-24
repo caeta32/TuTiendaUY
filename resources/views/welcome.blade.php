@@ -38,7 +38,6 @@
                     <button  id="btnFetch" type="submit" class="btn btn-primary btn-block"> Acceder </button>
                 </div>
                 <p class="text-center">No tienes una cuenta? <a href="{{url('/registro')}}">Registrate</a> </p>
-                <p class="text-center"><a href="{{url('/invitado')}}">Acceder como Invitado</a> </p>
                 <!-- form-group// -->
             </form>
         </article>
