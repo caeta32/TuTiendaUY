@@ -7,7 +7,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ProductoController;
 
 Route::get('/', function () {
-    return view('invitado');
+    return view('welcome');
 });
 
 route::get('/principal', function () {
