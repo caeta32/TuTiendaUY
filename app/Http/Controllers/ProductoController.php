@@ -54,6 +54,7 @@ class ProductoController extends Controller
             $producto->emailVendedor = $usuario->email;
             $producto->nombre = $request->nombre;
             $producto->descripcion = $request->descripcion;
+            $producto->categoria = $request->categoria;
             $producto->precio = $request->precio;
             $producto->cantidadDisponible = $request->cantidadDisponible;
             // Se crea nombre del archivo.
@@ -90,7 +91,7 @@ class ProductoController extends Controller
             $producto->rutaImagen = $result->get('ObjectURL');
             // Se persiste en base de datos.
             $producto->save();
-            
+
             return redirect()
                 ->route('ventas.publicar', ['codigoProd' => $producto->codigo]);
         } else {
@@ -243,9 +244,16 @@ class ProductoController extends Controller
     }
 // FIN Editar Producto ======================================================================================
 
+// Ver por Categoria ======================================================================================
+    public function verPorCategoria(Request $request) {
+        $categoria = $request->get('mybutton');
+        return view('productos.productoscategoria')->with('categoria', $categoria);
+    }
+// FIN Ver por Categoria ======================================================================================
+
 // COMPRAS =====================================================================================================
 // Iniciar Compra de Producto ======================================================================================
-    /*    
+    /*
     * Para el caso de compra directa, debe llegar un objeto eloquent formateado como json en una string.
     * Para el caso de compra desde el carrito, debe llegar un array formateado a json en una string con los productos
     * dados por la función correspondiente del carrito.
@@ -258,7 +266,7 @@ class ProductoController extends Controller
         // Y el o los productos correspondientes.
         $cartBool = $request->cartBool;
         $productsReceived = json_decode($request->products);
-        
+
         // array donde se almacenará cada producto como un array asociativo para poder ser leído
         // por la vista de confirmación.
         $products = array();
@@ -286,7 +294,7 @@ class ProductoController extends Controller
                 if(
                     Producto::where('codigo', '=', $productsReceived->codigo)
                             ->where('emailVendedor', '=', Session::get('usuario')['email'])
-                            ->exists()                
+                            ->exists()
                 ) {
                     //ERROR
                     throw new Exception('productSoldByMyself');
@@ -401,7 +409,7 @@ class ProductoController extends Controller
 
 // Enviar mail de Compra ======================================================================================
 public function enviarCorreoDeCompra($emailUsuario) {
-    try { 
+    try {
         $mail = new PHPMailer(true); // Creacion instancia PHPMailer, true para poder manejar excepciones
 
         // Configuración del servidor
@@ -410,7 +418,7 @@ public function enviarCorreoDeCompra($emailUsuario) {
 
         // servidor smtp
         // $mail->Host = "smtp.office365.com";
-        $mail->Host = "smtp.gmail.com"; 
+        $mail->Host = "smtp.gmail.com";
 
         // $mail->Username = 'tutiendaury@outlook.com';
         // $mail->Password = 'tallerPHP';
@@ -432,7 +440,7 @@ public function enviarCorreoDeCompra($emailUsuario) {
         // Attachments
         $mail->AddEmbeddedImage('img/logo.png', 'img1');
         $mail->AddEmbeddedImage('img/logo-email-confirmacion-compra/package.png', 'img2');
-        
+
         // Contenido
         $mail->Subject = "Compra Realizada";
         $mail->Priority = 1;

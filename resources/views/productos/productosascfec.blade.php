@@ -42,7 +42,20 @@ overflow-x: hidden;">
 <div>
     <h5 style="margin-left: 1%; position: absolute; margin-top: 13%;">&nbsp;Categorias</h5>
     <hr style="margin-left: 1%; width: 11%; border-color: black; position: absolute; margin-top: 14.5%;">
-    <ul class="list-group list-group-flush" style=" margin-left: 1%; width: 11%; margin-top: 15%; position: absolute"> <a href="#" class="list-group-item list-group-item-action">Tecnologia</a> <a href="#" class="list-group-item list-group-item-action">Deportes</a> <a href="#" class="list-group-item list-group-item-action">Alimentos</a> <a href="#" class="list-group-item list-group-item-action">Vestimenta</a> <a href="#" class="list-group-item list-group-item-action">Muebles</a> <a href="#" class="list-group-item list-group-item-action">Electrodomesticos</a> <a href="#" class="list-group-item list-group-item-action">Juguetes</a> <a href="#" class="list-group-item list-group-item-action">Herramientas</a> </ul>
+    <ul class="list-group list-group-flush" style=" margin-left: 1%; width: 11%; margin-top: 15%; position: absolute">
+        <form id="formid" action="{{ route('categoriaController') }}" target="_parent" method="POST">
+            @csrf
+            <button type="submit" name="mybutton" value="Tecnologia" class="list-group-item list-group-item-action">Tecnologia</button>
+            <button type="submit" name="mybutton" value="Deportes" class="list-group-item list-group-item-action">Deportes</button>
+            <button type="submit" name="mybutton" value="Alimentos" class="list-group-item list-group-item-action">Alimentos</button>
+            <button type="submit" name="mybutton" value="Bebidas" class="list-group-item list-group-item-action">Bebidas</button>
+            <button type="submit" name="mybutton" value="Vestimenta" class="list-group-item list-group-item-action">Vestimenta</button>
+            <button type="submit" name="mybutton" value="Muebles" class="list-group-item list-group-item-action">Muebles</button>
+            <button type="submit" name="mybutton" value="Electrodomesticos" class="list-group-item list-group-item-action">Electrodomesticos</button>
+            <button type="submit" name="mybutton" value="Juguetes" class="list-group-item list-group-item-action">Juguetes</button>
+            <button type="submit" name="mybutton" value="Herramientas" class="list-group-item list-group-item-action">Herramientas</button>
+        </form>
+    </ul>
 </div>
 <div class="container" style="max-width: 75%">
     <div class="row">

@@ -2,7 +2,7 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 $mail = Session::get('usuario')['email'];
-$productos = DB::table('productos')->orderBy('precio', 'asc')->get();
+$productos = DB::table('productos')->where('categoria', $categoria)->get();
 
 
 ?>

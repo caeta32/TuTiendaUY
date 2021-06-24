@@ -18,9 +18,14 @@ overflow-x: hidden;">
 	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        function resizeIframe(obj) {
+            obj.style.height = obj.contentWindow.document.documentElement.scrollHeight + 'px';
+        }
+
+    </script>
 </head>
 
-<body style="background-color: #EBEBEB">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <br>
 <br>
@@ -42,7 +47,20 @@ overflow-x: hidden;">
 <div>
     <h5 style="margin-left: 1%; position: absolute; margin-top: 13%;">&nbsp;Categorias</h5>
     <hr style="margin-left: 1%; width: 11%; border-color: black; position: absolute; margin-top: 14.5%;">
-    <ul class="list-group list-group-flush" style=" margin-left: 1%; width: 11%; margin-top: 15%; position: absolute"> <a href="#" class="list-group-item list-group-item-action">Tecnologia</a> <a href="#" class="list-group-item list-group-item-action">Deportes</a> <a href="#" class="list-group-item list-group-item-action">Alimentos</a> <a href="#" class="list-group-item list-group-item-action">Vestimenta</a> <a href="#" class="list-group-item list-group-item-action">Muebles</a> <a href="#" class="list-group-item list-group-item-action">Electrodomesticos</a> <a href="#" class="list-group-item list-group-item-action">Juguetes</a> <a href="#" class="list-group-item list-group-item-action">Herramientas</a> </ul>
+    <ul class="list-group list-group-flush" style=" margin-left: 1%; width: 11%; margin-top: 15%; position: absolute">
+        <form id="formid" action="{{ route('categoriaController') }}" target="_parent" method="POST">
+            @csrf
+            <button type="submit" name="mybutton" value="Tecnologia" class="list-group-item list-group-item-action">Tecnologia</button>
+            <button type="submit" name="mybutton" value="Deportes" class="list-group-item list-group-item-action">Deportes</button>
+            <button type="submit" name="mybutton" value="Alimentos" class="list-group-item list-group-item-action">Alimentos</button>
+            <button type="submit" name="mybutton" value="Bebidas" class="list-group-item list-group-item-action">Bebidas</button>
+            <button type="submit" name="mybutton" value="Vestimenta" class="list-group-item list-group-item-action">Vestimenta</button>
+            <button type="submit" name="mybutton" value="Muebles" class="list-group-item list-group-item-action">Muebles</button>
+            <button type="submit" name="mybutton" value="Electrodomesticos" class="list-group-item list-group-item-action">Electrodomesticos</button>
+            <button type="submit" name="mybutton" value="Juguetes" class="list-group-item list-group-item-action">Juguetes</button>
+            <button type="submit" name="mybutton" value="Herramientas" class="list-group-item list-group-item-action">Herramientas</button>
+        </form>
+    </ul>
 </div>
 <div class="container" style="max-width: 75%">
     <div class="row">
@@ -110,7 +128,8 @@ overflow-x: hidden;">
             </form>
         </div>
     </div>
-</div> {{-- FIN MODAL --}} {{-- ================================================================= --}} {{-- ================================================================= --}} {{-- Script JS para obtener datos para el modal del añadir al carrito --}}
+</div>
+</body>{{-- FIN MODAL --}} {{-- ================================================================= --}} {{-- ================================================================= --}} {{-- Script JS para obtener datos para el modal del añadir al carrito --}}
 <script type="text/javascript">
     var modalAddToCart = document.getElementById('addToCart');
     modalAddToCart.addEventListener('show.bs.modal', function(event) {

@@ -138,7 +138,7 @@ Route::view('/proddescfec', 'productos.productosdescfec');
 Route::post("/busquedaproducto", [ProductoController::class, 'verBuscados'])->name('buscarController');
 Route::view('/encontrados', 'productos.productosbusqueda');
 
-
+Route::post('/porcategoria', [ProductoController::class, 'verPorCategoria'])->name('categoriaController');
 
 Route::delete('/eliminarProducto/{codigoProd}', [ProductoController::class, 'eliminar'])->name('productos.eliminarProd');
 // Fin productos =============================================================

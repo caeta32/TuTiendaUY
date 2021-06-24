@@ -62,6 +62,23 @@
                         <small id="descripcionHelp" class="form-text text-muted">No incluya información personal o de contacto.</small>
                     </div>
                     <div class="form-group">
+                        <label for="categoria" class="control-label">Seleccione una categoria para su producto:</label>
+                        <br>
+                        <select class="form-select" name="categoria" aria-label="Default select example" style="width: 100%; background-color: #FFFFFF;
+                         border: 1px solid #CED4DA; border-radius: 3px; padding: 8px">
+                            <option selected>Categorias</option>
+                            <option>Tecnologia</option>
+                            <option>Deportes</option>
+                            <option>Alimentos</option>
+                            <option>Bebidas</option>
+                            <option>Vestimenta</option>
+                            <option>Muebles</option>
+                            <option>Electrodomesticos</option>
+                            <option>Juguetes</option>
+                            <option>Herramientas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
                         <label for="codigo" class="control-label">Escriba el código del producto:</label>
                         <input name="codigo" id="codigo" class="form-control" placeholder="" type="text" maxlength="100" value="@if(!empty($datos)){{$datos[2]}}@endif" required>
                     </div>

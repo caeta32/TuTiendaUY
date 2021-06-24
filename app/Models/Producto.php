@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     use HasFactory;
-    
+
     protected $fillable = [
         'codigo',
         'emailVendedor',
@@ -16,7 +16,8 @@ class Producto extends Model
         'descripcion',
         'precio',
         'cantidadDisponible',
-        'rutaImagen'
+        'rutaImagen',
+        'categoria'
     ];
 
     // Convenciones de primary key

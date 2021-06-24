@@ -5,7 +5,7 @@ $mail = Session::get('usuario')['email'];
 ?>
 
 <!DOCTYPE html>
-<html style="height: 100%; background-color: #F8F9FA">
+<html style="height: 100%; background-color: #FFFFFF">
 <head>
     <title>TuTienda</title>
     <link rel="shortcut icon" href="{{ asset('img/favicon.ico') }}">
@@ -24,7 +24,7 @@ $mail = Session::get('usuario')['email'];
     </script>
 </head>
 
-<body style="margin: 0; background-color: #EBEBEB; height: 100%;">
+<body style="margin: 0; height: 100%;">
 <div style="width: 100%; position: fixed; z-index: 9999999;">
     <form id="formid" action="{{ route('buscarController') }}"  method="POST">
         @csrf
