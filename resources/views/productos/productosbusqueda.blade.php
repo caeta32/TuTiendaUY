@@ -1,16 +1,13 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
-if(isset(Session::get('usuario')['email'])) {
-    $mail = Session::get('usuario')['email'];
-    $nombre = Session::get('usuario')['nombre'];
-} else {
-    $mail = "invitado";
-}
-
-
+$mail = Session::get('usuario')['email'];
+$nombre = Session::get('usuario')['nombre'];
 ?>
+
+@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente')
+
 <!DOCTYPE html>
 <head style="    overflow: scroll;
 overflow-x: hidden;">
@@ -28,14 +25,11 @@ overflow-x: hidden;">
 <br>
 
 <?php if($mail!="administradores@tutienda.com") {
-?><br>
+?><br><br>
 <?php ;
-} else {
+};?>
+<br>
 
-    ?>
-    <?php ;}?>
-<br>
-<br>
 <div>
     <h5 style="margin-left: 1%; position: absolute; margin-top: 0%;">&nbsp;Ordenar Por</h5>
     <hr style="margin-left: 1%; width: 11%; border-color: black; position: absolute; margin-top: 1.5%;">
@@ -200,3 +194,4 @@ overflow-x: hidden;">
 {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}}
 {{-- ================================================================= --}}
 </body>
+@endsection

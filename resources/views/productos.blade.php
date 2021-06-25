@@ -34,7 +34,7 @@ overflow-x: hidden;">
 <?php ;
 } else {
 
-    ?>
+    ?><br>
     <?php ;}?>
 <br>
 <br>
