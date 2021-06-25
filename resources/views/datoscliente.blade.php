@@ -11,13 +11,23 @@
         <div class="card bg-light mb-auto" style="box-shadow:0px 0px 15px #777777;">
             <article class="card-body mx-auto" style="max-width: 1000px; display: inline; text-align: center">
                 <h1>Panel de Control</h1>
-                <div style="text-align: center">
-                    <hr style=" width:75%; margin:0 auto;"> 
-                    <a class="navbar-brand" href="{{ url('/datospersonales') }}" target="miiframe" style=" font-size: large;">Mis Datos</a> 
-                    <a class="navbar-brand" href="#" target="miiframe" style=" font-size: large;">Compras</a> 
-                    <a class="navbar-brand" href="{{ url('/verVentas') }}" target="miiframe" style=" font-size: large;">Ventas</a> 
-                    <a class="navbar-brand" href="{{ url('/verprod') }}" target="miiframe" style=" font-size: large;">Productos</a> 
-                </div>
+                <hr style=" width:75%; margin:0 auto;"> 
+                <nav class="navbar navbar-expand-sm navbar-light bg-light">
+                    <ul class="navbar-nav mr-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/datospersonales') }}" target="miiframe" style=" font-size: 1.3rem;">Mis Datos</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/verPedidos') }}" target="miiframe" style=" font-size: 1.3rem;">Compras</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/verVentas') }}" target="miiframe" style=" font-size: 1.3rem;">Ventas</a> 
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ url('/verprod') }}" target="miiframe" style=" font-size: 1.3rem;">Productos</a> 
+                        </li>
+                    </ul>
+                </nav>
             </article>
             <iframe name="miiframe" scrolling="no" frameborder="0" style="
             top: 0;

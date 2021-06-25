@@ -4,17 +4,16 @@ use Illuminate\Support\Facades\Session;
 
 if(isset(Session::get('usuario')['email'])) {
     $mail = Session::get('usuario')['email'];
+    $nombre = Session::get('usuario')['nombre'];
 } else {
     $mail = "invitado";
 }
 
 
 ?>
-@extends('layouts.masterCliente')
-@section('sectionCliente')
-
-
-<head>
+<!DOCTYPE html>
+<head style="    overflow: scroll;
+overflow-x: hidden;">
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
     <link href="./css/styles.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" /> {{--
@@ -24,6 +23,7 @@ if(isset(Session::get('usuario')['email'])) {
 </head>
 
 <body style="background-color: #EBEBEB">
+@include('parciales.solParaBarraSuperior')
 <br>
 <br>
 
@@ -200,4 +200,3 @@ if(isset(Session::get('usuario')['email'])) {
 {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}}
 {{-- ================================================================= --}}
 </body>
-@endsection

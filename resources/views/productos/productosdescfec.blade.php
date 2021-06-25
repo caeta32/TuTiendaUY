@@ -2,12 +2,11 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 $mail = Session::get('usuario')['email'];
+$nombre = Session::get('usuario')['nombre'];
 $productos = DB::table('productos')->orderBy('created_at', 'desc')->get();
 
 
 ?>
-@extends('layouts.masterCliente')
-@section('sectionCliente')
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
@@ -21,6 +20,7 @@ overflow-x: hidden;">
 </head>
 
 <body style="background-color: #EBEBEB">
+@include('parciales.solParaBarraSuperior')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <br>
 <br>
@@ -159,5 +159,3 @@ overflow-x: hidden;">
 </script> {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} {{-- ================================================================= --}} </body>
 
 </html>
-@endsection
-

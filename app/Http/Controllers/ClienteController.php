@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use PHPMailer\PHPMailer\PHPMailer;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Arr;
 
 // Models
 use App\Models\Cliente;
@@ -15,11 +16,176 @@ use Exception;
 
 class ClienteController extends Controller
 {
-    public function verVentasDeUsuario() {
-      try {
-        // Consulta SQL para los pedidos cuyo estado de envío es en espera y están asociados 
-        // al usuario de la sesión con el rol de comprador
-        $pedidosEnEspera = DB::table('pedidos_contienen_prods as pedidos_prods')
+  public function verPedidosDeUsuario() {
+    try {
+      // Matriz que contendrá los productos de cada pedido.
+      // Las primeras posiciones corresponderán al id del pedido, las segundas posiciones corresponderán
+      // a un array no asociativo, cada posición de este array no asociativo contendrá un
+      // array asociativo, con información de un producto asociado a un pedido cuyo id es el de la 
+      // primera posición antes mencionada.
+      $productosDePedidos = array(array());
+      // Array donde cada posición corresponderá al id de un pedido y que contendrá en cada posición
+      // un array asociativo con información del pedido con dicho id.
+      $pedidos = array();
+      // Consulta SQL para los pedidos cuyo estado de envío es en espera y están asociados 
+      // al usuario de la sesión con el rol de comprador
+      $pedidosEnEspera = DB::table('pedidos_contienen_prods as pedidos_prods')
+                            ->join('pedidos as p', function ($join) {
+                              // Se obtiene usuario para saber su email.
+                              $usuario = session()->get('usuario', 'default');
+
+                              $join->on('pedidos_prods.idPedido', '=', 'p.id')
+                                  ->where('p.emailComprador', '=', $usuario->email);
+                            })
+                            ->join('productos as prods', 'pedidos_prods.codigoProducto', '=', 'prods.codigo')
+                            ->join('clientes as c', 'c.email', '=', 'prods.emailVendedor')
+                            ->join('envios_en_esperas as e', 'e.idEnvio', '=', 'p.idEnvio')
+                            ->whereNotIn('p.idEnvio', function ($query) {
+                              $query->select('env_desp.idEnvio')->from('envio_despachados as env_desp');
+                            })
+                            ->select(
+                              'pedidos_prods.cantidadPedida',
+                              'p.id as idPedido',
+                              'p.cantidadTotal',
+                              'p.precioTotal',
+                              'p.created_at as fechaPedido',
+                              'c.nombre as nombreVendedor',
+                              'e.idEnvio as idEnvio',
+                              'e.created_at as fechaEnvio',
+                              'prods.emailVendedor',
+                              'prods.nombre as nombreProducto', 
+                              'prods.precio',
+                              'prods.rutaImagen'
+                            )
+                            ->get();
+      // Consulta SQL para los pedidos cuyo estado de envío es despachado y están asociados 
+      // al usuario de la sesión con el rol de comprador
+      $pedidosDespachados = DB::table('pedidos_contienen_prods as pedidos_prods')
+                            ->join('pedidos as p', function ($join) {
+                              // Se obtiene usuario para saber su email.
+                              $usuario = session()->get('usuario', 'default');
+
+                              $join->on('pedidos_prods.idPedido', '=', 'p.id')
+                                  ->where('p.emailComprador', '=', $usuario->email);
+                            })
+                            ->join('productos as prods', 'pedidos_prods.codigoProducto', '=', 'prods.codigo')
+                            ->join('clientes as c', 'c.email', '=', 'prods.emailVendedor')
+                            ->join('envio_despachados as e', 'e.idEnvio', '=', 'p.idEnvio')
+                            ->select(
+                              'pedidos_prods.cantidadPedida',
+                              'p.id as idPedido',
+                              'p.cantidadTotal',
+                              'p.precioTotal',
+                              'p.created_at as fechaPedido',
+                              'c.nombre as nombreVendedor',
+                              'e.idEnvio as idEnvio',
+                              'e.created_at as fechaEnvio',
+                              'prods.emailVendedor',
+                              'prods.nombre as nombreProducto', 
+                              'prods.precio',
+                              'prods.rutaImagen'
+                            )
+                            ->get();
+
+      if (sizeof($pedidosDespachados) == 0 && sizeof($pedidosEnEspera) == 0) {
+        return view('compras.comprasNotFound');
+      }
+
+      // Almacenando los datos de los productos y pedidos en matrices para no 
+      // tener que recorrer todo el array de pedidos cada vez que se quieran 
+      // obtener los productos de un pedido y a su vez recorrer demás el array
+      // de pedidos para ver cada uno en la vista.
+      foreach($pedidosEnEspera as $pedido) {
+        // if(isset($pedidos[$pedido->idPedido]) || array_key_exists($pedido->idPedido, $pedidos))
+        if(! Arr::exists($pedidos, $pedido->idPedido)) {
+          $pedidoNew = array();
+          $pedidoNew['idPedido'] = $pedido->idPedido;
+          $pedidoNew['cantidadTotal'] = $pedido->cantidadTotal;
+          $pedidoNew['precioTotal'] = $pedido->precioTotal;
+          $pedidoNew['fechaPedido'] = $pedido->fechaPedido;
+          $pedidoNew['idEnvio'] = $pedido->idEnvio;
+          $pedidoNew['fechaEnvio'] = $pedido->fechaEnvio;
+          $pedidoNew['rutaImagenPrimerProducto'] = $pedido->rutaImagen;
+          $pedidoNew['status'] = 'En Espera';
+          $pedidos[$pedido->idPedido] = $pedidoNew;
+        }
+        $productNew = array();
+        $productNew['nombreVendedor'] = $pedido->nombreVendedor;
+        $productNew['emailVendedor'] = $pedido->emailVendedor;
+        $productNew['nombreProducto'] = $pedido->nombreProducto;
+        $productNew['precio'] = $pedido->precio;
+        $productNew['subTotal'] = $pedido->precio * $pedido->cantidadPedida;
+        $productNew['rutaImagen'] = $pedido->rutaImagen;
+        $productNew['cantidadPedida'] = $pedido->cantidadPedida;
+        $productosDePedidos[$pedido->idPedido][] = $productNew;
+      }
+
+      foreach($pedidosDespachados as $pedido) {
+        // if(isset($pedidos[$pedido->idPedido]) || array_key_exists($pedido->idPedido, $pedidos))
+        if(! Arr::exists($pedidos, $pedido->idPedido)) {
+          $pedidoNew = array();
+          $pedidoNew['idPedido'] = $pedido->idPedido;
+          $pedidoNew['cantidadTotal'] = $pedido->cantidadTotal;
+          $pedidoNew['precioTotal'] = $pedido->precioTotal;
+          $pedidoNew['fechaPedido'] = $pedido->fechaPedido;
+          $pedidoNew['idEnvio'] = $pedido->idEnvio;
+          $pedidoNew['fechaEnvio'] = $pedido->fechaEnvio;
+          $pedidoNew['rutaImagenPrimerProducto'] = $pedido->rutaImagen;
+          $pedidoNew['status'] = 'Despachado';
+          $pedidos[$pedido->idPedido] = $pedidoNew;
+        }
+        $productNew = array();
+        $productNew['nombreVendedor'] = $pedido->nombreVendedor;
+        $productNew['emailVendedor'] = $pedido->emailVendedor;
+        $productNew['nombreProducto'] = $pedido->nombreProducto;
+        $productNew['precio'] = $pedido->precio;
+        $productNew['subTotal'] = $pedido->precio * $pedido->cantidadPedida;
+        $productNew['rutaImagen'] = $pedido->rutaImagen;
+        $productNew['cantidadPedida'] = $pedido->cantidadPedida;
+        $productosDePedidos[$pedido->idPedido][] = $productNew;
+      }
+
+      return view('compras.verPedidos')->with('data', ['pedidos' => $pedidos, 'productosDePedidos' => $productosDePedidos]);
+    } catch (Exception $e) {
+      // Tratar excepción
+      return view('errores.errorIframe')->with('error', $e->getMessage());
+    }
+  }
+
+  public function verVentasDeUsuario() {
+    try {
+      // Consulta SQL para los pedidos cuyo estado de envío es en espera y están asociados 
+      // al usuario de la sesión con el rol de vendedor
+      $pedidosEnEspera = DB::table('pedidos_contienen_prods as pedidos_prods')
+                    ->join('pedidos as p', 'pedidos_prods.idPedido', '=', 'p.id')
+                    ->join('productos as prods', function ($join) {
+                        // Se obtiene usuario para saber su email.
+                        $usuario = session()->get('usuario', 'default');
+
+                        $join->on('pedidos_prods.codigoProducto', '=', 'prods.codigo')
+                            ->where('prods.emailVendedor', '=', $usuario->email);
+                    })
+                    ->join('clientes as c', 'c.email', '=', 'p.emailComprador')
+                    ->join('envios_en_esperas as e', 'e.idEnvio', '=', 'p.idEnvio')
+                    ->whereNotIn('p.idEnvio', function ($query) {
+                      $query->select('env_desp.idEnvio')->from('envio_despachados as env_desp');
+                    })
+                    ->select(
+                      'pedidos_prods.cantidadPedida',
+                      'p.id as idPedido',
+                      'p.created_at as fechaPedido',
+                      'p.emailComprador',                       
+                      'c.nombre as nombreUsuario',
+                      'e.idEnvio as idEnvio',
+                      'e.created_at as fechaEnvio',
+                      'prods.nombre as nombreProducto', 
+                      'prods.precio', 
+                      'prods.rutaImagen'
+                    )
+                    ->get();
+      // Consulta SQL para los pedidos cuyo estado de envío es despachado y están asociados 
+      // al usuario de la sesión con el rol de vendedor
+      $pedidosDespachados = DB::table('pedidos_contienen_prods as pedidos_prods')
                       ->join('pedidos as p', 'pedidos_prods.idPedido', '=', 'p.id')
                       ->join('productos as prods', function ($join) {
                           // Se obtiene usuario para saber su email.
@@ -28,16 +194,13 @@ class ClienteController extends Controller
                           $join->on('pedidos_prods.codigoProducto', '=', 'prods.codigo')
                               ->where('prods.emailVendedor', '=', $usuario->email);
                       })
+                      ->join('envio_despachados as e', 'e.idEnvio', '=', 'p.idEnvio')
                       ->join('clientes as c', 'c.email', '=', 'p.emailComprador')
-                      ->join('envios_en_esperas as e', 'e.idEnvio', '=', 'p.idEnvio')
-                      ->whereNotIn('p.idEnvio', function ($query) {
-                        $query->select('env_desp.idEnvio')->from('envio_despachados as env_desp');
-                      })
                       ->select(
                         'pedidos_prods.cantidadPedida',
                         'p.id as idPedido',
                         'p.created_at as fechaPedido',
-                        'p.emailComprador',                       
+                        'p.emailComprador',
                         'c.nombre as nombreUsuario',
                         'e.idEnvio as idEnvio',
                         'e.created_at as fechaEnvio',
@@ -46,38 +209,17 @@ class ClienteController extends Controller
                         'prods.rutaImagen'
                       )
                       ->get();
-        // Consulta SQL para los pedidos cuyo estado de envío es despachado y están asociados 
-        // al usuario de la sesión con el rol de comprador
-        $pedidosDespachados = DB::table('pedidos_contienen_prods as pedidos_prods')
-                        ->join('pedidos as p', 'pedidos_prods.idPedido', '=', 'p.id')
-                        ->join('productos as prods', function ($join) {
-                            // Se obtiene usuario para saber su email.
-                            $usuario = session()->get('usuario', 'default');
-
-                            $join->on('pedidos_prods.codigoProducto', '=', 'prods.codigo')
-                                ->where('prods.emailVendedor', '=', $usuario->email);
-                        })
-                        ->join('envio_despachados as e', 'e.idEnvio', '=', 'p.idEnvio')
-                        ->join('clientes as c', 'c.email', '=', 'p.emailComprador')
-                        ->select(
-                          'pedidos_prods.cantidadPedida',
-                          'p.id as idPedido',
-                          'p.created_at as fechaPedido',
-                          'p.emailComprador',
-                          'c.nombre as nombreUsuario',
-                          'e.idEnvio as idEnvio',
-                          'e.created_at as fechaEnvio',
-                          'prods.nombre as nombreProducto', 
-                          'prods.precio', 
-                          'prods.rutaImagen'
-                        )
-                        ->get();
-        return view('ventas.verVentas')->with('data', ['pedidosEnEspera' => $pedidosEnEspera, 'pedidosDespachados' => $pedidosDespachados]);
-      } catch (Exception $e) {
-        // Tratar excepción
-        return view('errores.errorIframe')->with('error', $e->getMessage());
+      
+      if (sizeof($pedidosDespachados) == 0 && sizeof($pedidosEnEspera) == 0) {
+        return view('ventas.ventasNotFound');
       }
+
+      return view('ventas.verVentas')->with('data', ['pedidosEnEspera' => $pedidosEnEspera, 'pedidosDespachados' => $pedidosDespachados]);
+    } catch (Exception $e) {
+      // Tratar excepción
+      return view('errores.errorIframe')->with('error', $e->getMessage());
     }
+  }
     
     public function login(Request $request)
     {

@@ -23,9 +23,9 @@
     
 </head>
 <body style="background-color: #F8F9FA;">
-    <div class="row justify-content-center mt-2">
+    <div class="row justify-content-center">
         <div class="col-10 col-sm-8 col-md-8 col-lg-11 col-xl-15 mb-5">
-            <div class="row justify-content-center mb-5 mx-5 mt-5">
+            <div class="row justify-content-center mb-5 mx-5 mt-4">
                 <div class="col">
                     {{-- ENVÍOS EN ESPERA --}}
                     @foreach(Arr::get($data, 'pedidosEnEspera') as $item)

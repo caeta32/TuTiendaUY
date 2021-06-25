@@ -2,12 +2,11 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 $mail = Session::get('usuario')['email'];
+$nombre = Session::get('usuario')['nombre'];
 $productos = DB::table('productos')->orderBy('precio', 'desc')->get();
 
 
 ?>
-@extends('layouts.masterCliente')
-@section('sectionCliente')
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
@@ -26,6 +25,8 @@ overflow-x: hidden;">
     </script>
 </head>
 
+<body style="background-color: #EBEBEB">
+@include('parciales.solParaBarraSuperior')
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <br>
 <br>
@@ -129,7 +130,11 @@ overflow-x: hidden;">
         </div>
     </div>
 </div>
-</body>{{-- FIN MODAL --}} {{-- ================================================================= --}} {{-- ================================================================= --}} {{-- Script JS para obtener datos para el modal del añadir al carrito --}}
+</body>
+{{-- FIN MODAL --}} 
+{{-- ================================================================= --}} 
+{{-- ================================================================= --}} 
+{{-- Script JS para obtener datos para el modal del añadir al carrito --}}
 <script type="text/javascript">
     var modalAddToCart = document.getElementById('addToCart');
     modalAddToCart.addEventListener('show.bs.modal', function(event) {
@@ -162,7 +167,10 @@ overflow-x: hidden;">
         fieldPrecio.value = parseFloat(precio);
         fieldRutaImagen.value = rutaImagen;
     });
-</script> {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} {{-- ================================================================= --}} </body>
+</script> 
+{{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} 
+{{-- ================================================================= --}} 
+</body>
 
 </html>
 
