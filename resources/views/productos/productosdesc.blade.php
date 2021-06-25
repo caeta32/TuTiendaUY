@@ -6,7 +6,7 @@ $productos = DB::table('productos')->orderBy('precio', 'desc')->get();
 
 
 ?>
-@extends('layouts.masterCliente')
+@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
 @section('sectionCliente')
     <!DOCTYPE html>
 <html style="    overflow: scroll;
@@ -35,7 +35,7 @@ overflow-x: hidden;">
 <?php ;
 } else {
 
-    ?>
+    ?><br>
 			<?php ;}?>
 <br>
 <br>

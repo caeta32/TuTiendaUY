@@ -1,16 +1,12 @@
 <?php
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
-
-if(isset(Session::get('usuario')['email'])) {
-    $mail = Session::get('usuario')['email'];
-} else {
-    $mail = "invitado";
-}
-
-
+$mail = Session::get('usuario')['email']
 ?>
-@extends('layouts.masterCliente')
+
+@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+
+
 @section('sectionCliente')
 
 
@@ -28,14 +24,11 @@ if(isset(Session::get('usuario')['email'])) {
 <br>
 
 <?php if($mail!="administradores@tutienda.com") {
-?><br>
+?><br><br>
 <?php ;
-} else {
+};?>
+<br>
 
-    ?>
-    <?php ;}?>
-<br>
-<br>
 <div>
     <h5 style="margin-left: 1%; position: absolute; margin-top: 0%;">&nbsp;Ordenar Por</h5>
     <hr style="margin-left: 1%; width: 11%; border-color: black; position: absolute; margin-top: 1.5%;">
