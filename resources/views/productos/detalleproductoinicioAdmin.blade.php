@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Session;
 $mail = Session::get('usuario')['email'];
 
 ?>
+@extends('layouts.layoutAdmin')
+@section('sectionCliente')
     <!DOCTYPE html>
 <html>
 
@@ -21,8 +23,7 @@ $mail = Session::get('usuario')['email'];
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.8/css/all.css">
 
 </head>
-<body style="background-color: #F8F9FA">
-<br>
+<body style="background-color: #FFFFFF">
 <br>
 
 <article class="card-body mx-auto" style="max-width: 1000px; max-height: 1500px; ">
@@ -55,7 +56,7 @@ $mail = Session::get('usuario')['email'];
                 <hr style="width: 76%; margin-left: 12%; margin-bottom: 6%;">
                 <div class="row align-items-center justify-content-around mt-5">
                     <div class="col-sm-auto">
-                        <a href="{{ url('/paneldecontrol') }}" class="btn btn-primary">Ir a Panel de Control</a>
+                        <a href="{{ url('/paneldecontrol') }}" class="btn btn-primary" style="margin-top: -30%">Ir a Panel de Control</a>
                     </div>
                 </div>
             </div>
@@ -64,3 +65,4 @@ $mail = Session::get('usuario')['email'];
 </article>
 </body>
 </html>
+@endsection

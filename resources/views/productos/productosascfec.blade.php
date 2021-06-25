@@ -7,6 +7,8 @@ $productos = DB::table('productos')->orderBy('created_at', 'asc')->get();
 
 
 ?>
+@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente')
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
@@ -30,7 +32,7 @@ overflow-x: hidden;">
 <?php ;
 } else {
 
-    ?>
+    ?><br>
 			<?php ;}?>
 <br>
 <br>
@@ -159,3 +161,4 @@ overflow-x: hidden;">
 </script> {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} {{-- ================================================================= --}} </body>
 
 </html>
+@endsection

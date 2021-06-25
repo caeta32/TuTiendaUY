@@ -123,9 +123,9 @@ use Illuminate\Support\Facades\Session;
                 </button>
             </div>
             {{-- FORMULARIO --}}
-            {{-- En este caso, sólo necesita enviarse la cantidad pedida (totalQuantity), 
-            el objeto del modelo de producto como un objeto json formateado a string (products) 
-            y el string cartBool con el valor "false". El precio total es calculado por la 
+            {{-- En este caso, sólo necesita enviarse la cantidad pedida (totalQuantity),
+            el objeto del modelo de producto como un objeto json formateado a string (products)
+            y el string cartBool con el valor "false". El precio total es calculado por la
             función del controlador. --}}
             <form action="{{route('iniciarCompra')}}" method="post">
                 @csrf
@@ -139,7 +139,7 @@ use Illuminate\Support\Facades\Session;
                 </div>
                 <div class="modal-footer">
                     {{-- ==================================================== --}}
-                    {{-- Los otros campos del form, más el formateo de los datos del producto 
+                    {{-- Los otros campos del form, más el formateo de los datos del producto
                         y el submit correspondiente --}}
                     @php
                         // Se formatea el producto para ser enviado.
