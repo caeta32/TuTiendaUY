@@ -5,8 +5,8 @@ $mail = Session::get('usuario')['email'];
 $nombre = Session::get('usuario')['nombre'];
 ?>
 
-@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
-@section('sectionCliente')
+{{-- @extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente') --}}
 
 <!DOCTYPE html>
 <head style="    overflow: scroll;
@@ -20,7 +20,11 @@ overflow-x: hidden;">
 </head>
 
 <body style="background-color: #EBEBEB">
-@include('parciales.solParaBarraSuperior')
+    @if ($mail == "administradores@tutienda.com")
+        @include('parciales.barraSuperiorAdmin')
+    @else
+        @include('parciales.barraSuperiorCliente')
+    @endif
 <br>
 <br>
 
@@ -194,4 +198,4 @@ overflow-x: hidden;">
 {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}}
 {{-- ================================================================= --}}
 </body>
-@endsection
+{{-- @endsection --}}

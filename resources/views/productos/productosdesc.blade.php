@@ -7,8 +7,8 @@ $productos = DB::table('productos')->orderBy('precio', 'desc')->get();
 
 
 ?>
-@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
-@section('sectionCliente')
+{{-- @extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente') --}}
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
@@ -28,7 +28,11 @@ overflow-x: hidden;">
 </head>
 
 <body style="background-color: #EBEBEB">
-@include('parciales.solParaBarraSuperior')
+    @if ($mail == "administradores@tutienda.com")
+        @include('parciales.barraSuperiorAdmin')
+    @else
+        @include('parciales.barraSuperiorCliente')
+    @endif
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
 <br>
 <br>
@@ -176,4 +180,4 @@ overflow-x: hidden;">
 
 </html>
 
-@endsection
+{{-- @endsection --}}

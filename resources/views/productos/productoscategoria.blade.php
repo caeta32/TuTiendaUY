@@ -2,26 +2,32 @@
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
 $mail = Session::get('usuario')['email'];
+$nombre = Session::get('usuario')['nombre'];
 $productos = DB::table('productos')->where('categoria', $categoria)->get();
 
 
 ?>
-@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
-@section('sectionCliente')
+{{-- @extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente') --}}
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
 
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="./css/styles.css" rel="stylesheet" id="bootstrap-css"> {{--
-	<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> --}}
+    <link href="./css/styles.css" rel="stylesheet" id="bootstrap-css"> 
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    {{-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 
 <body style="background-color: #EBEBEB">
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
+    @if ($mail == "administradores@tutienda.com")
+        @include('parciales.barraSuperiorAdmin')
+    @else
+        @include('parciales.barraSuperiorCliente')
+    @endif
 <br>
 <br>
 <?php if($mail!="administradores@tutienda.com") {
@@ -159,4 +165,4 @@ overflow-x: hidden;">
 </script> {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} {{-- ================================================================= --}} </body>
 
 </html>
-@endsection
+{{-- @endsection --}}

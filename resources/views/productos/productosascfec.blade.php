@@ -7,8 +7,8 @@ $productos = DB::table('productos')->orderBy('created_at', 'asc')->get();
 
 
 ?>
-@extends($mail == "administradores@tutienda.com" ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
-@section('sectionCliente')
+{{-- @extends( ? 'layouts.layoutAdmin' : 'layouts.masterCliente')
+@section('sectionCliente') --}}
     <!DOCTYPE html>
 <html style="    overflow: scroll;
 overflow-x: hidden;">
@@ -23,7 +23,12 @@ overflow-x: hidden;">
 </head>
 
 <body style="background-color: #EBEBEB">
-@include('parciales.solParaBarraSuperior')
+    @if ($mail == "administradores@tutienda.com")
+        @include('parciales.barraSuperiorAdmin')
+    @else
+        @include('parciales.barraSuperiorCliente')
+    @endif
+
 <br>
 <br>
 <?php if($mail!="administradores@tutienda.com") {
@@ -161,4 +166,4 @@ overflow-x: hidden;">
 </script> {{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} {{-- ================================================================= --}} </body>
 
 </html>
-@endsection
+{{-- @endsection --}}
