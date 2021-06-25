@@ -87,6 +87,8 @@ Route::get('/publicar/{codigoProd}', function () {
 Route::get('/verVentas', [ClienteController::class, 'verVentasDeUsuario']);
 
 Route::view('/verVentasView', 'ventas.verVentas');
+
+Route::view('/ventas-not-found', 'ventas.ventasNotFound');
 // Fin ventas =============================================================
 
 // Compras ===============================================================
@@ -95,6 +97,10 @@ Route::post('/iniciarCompra', [ProductoController::class, 'iniciarCompra'])->nam
 Route::post('/comprar', [ProductoController::class, 'comprar'])->name('comprar');
 
 Route::view('/compra-exitosa', 'compras.compraOK');
+
+Route::get('/verPedidos', [ClienteController::class, 'verPedidosDeUsuario']);
+
+Route::view('/compras-not-found', 'compras.comprasNotFound');
 // Fin compras =============================================================
 
 // Productos ===============================================================

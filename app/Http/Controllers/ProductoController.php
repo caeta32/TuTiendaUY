@@ -387,7 +387,7 @@ class ProductoController extends Controller
 
             // Finalización exitosa.
             DB::commit();
-            if(! $this->enviarCorreoDeCompra($usuario->email)) {
+            if(! $this->enviarCorreoDeCompra($usuario->email, $pedido->id, $pedido->cantidadTotal, $pedido->precioTotal, $pedido->created_at)) {
                 throw new Exception('failed mail compra');
             }
             return redirect('/compra-exitosa');
@@ -400,7 +400,7 @@ class ProductoController extends Controller
 // FIN Comprar Producto ======================================================================================
 
 // Enviar mail de Compra ======================================================================================
-public function enviarCorreoDeCompra($emailUsuario) {
+public function enviarCorreoDeCompra($emailUsuario, $idPedido, $cantidadProductos, $precioTotal, $fechaRealizado) {
     try { 
         $mail = new PHPMailer(true); // Creacion instancia PHPMailer, true para poder manejar excepciones
 
@@ -439,7 +439,7 @@ public function enviarCorreoDeCompra($emailUsuario) {
         $mail->IsHTML(true);
         // $mail->AltBody = 'Parece que no se admiten correos en HTML';
 // Contenido del correo electrónico
-        $mail->Body = $this->msjConfirmacionCompra();
+        $mail->Body = $this->msjConfirmacionCompra($idPedido, $cantidadProductos, $precioTotal, $fechaRealizado);
 // FIN Contenido del correo electrónico
 
         // Se retorna booleano.
@@ -456,7 +456,7 @@ public function enviarCorreoDeCompra($emailUsuario) {
 // FIN Enviar mail de Compra ======================================================================================
 
 // Método que devuelve el mensaje de correo para confirmar compra.  ================================================
-private function msjConfirmacionCompra() {
+private function msjConfirmacionCompra($idPedido, $cantidadProductos, $precioTotal, $fechaRealizado) {
     return '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
     <html
         xmlns="http://www.w3.org/1999/xhtml"
@@ -747,7 +747,7 @@ private function msjConfirmacionCompra() {
                                         overflow-wrap: break-word;
                                         word-wrap: break-word;
                                         word-break: break-word;
-                                        background-color: #e8eced;
+                                        background-color: #f3e8d9;
                                     "
                                 >
                                     <div
@@ -891,7 +891,7 @@ private function msjConfirmacionCompra() {
                                                                                             line-height: 36.4px;
                                                                                             font-size: 26px;
                                                                                         "
-                                                                                        >&iexcl;Tu compra se ha realizado con éxito!<br /></span></strong
+                                                                                        >&iexcl;Tu compra se ha realizado con &eacute;xito!<br /></span></strong
                                                                             ></span>
                                                                         </p>
                                                                     </div>
@@ -934,7 +934,7 @@ private function msjConfirmacionCompra() {
                                                                                 font-weight: bold;
                                                                             "
                                                                         >
-                                                                            El siguiente paso es que realices el pago de tu pedido, puedes hacerlo a través de cualquier medio de tu preferencia.
+                                                                            El siguiente paso es que realices el pago de tu pedido, puedes hacerlo a trav&eacute;s de cualquier medio de tu preferencia.
                                                                         </p>
                                                                     </div>
                                                                 </td>
@@ -959,7 +959,6 @@ private function msjConfirmacionCompra() {
                                                                     padding: 10px
                                                                         50px;
                                                                 "
-                                                                align="left"
                                                             >
                                                                 <div
                                                                     style="
@@ -986,17 +985,94 @@ private function msjConfirmacionCompra() {
                                                                             style="
                                                                                 font-size: 14px;
                                                                                 line-height: 33.6px;
-                                                                                margin-bottom: 25px;
                                                                             "
-                                                                            >Te estaremos avisando a esta dirección de email sobre el despacho de tus compras, &iexcl;para que no te tengas que preocupar de nada!</p>
+                                                                            >Te estaremos avisando a esta direcci&oacute;n de email sobre el despacho de tu pedido, &iexcl;para que no te tengas que preocupar de nada!</p>
                                                                             
-                                                                            <hr style="width: 85%; background: #9d9d9da2; border: none; height: 1px;">
+                                                                            <!-- <hr style="width: 85%; background: #9d9d9da2; border: none; height: 1px;"> -->
                                                                     </p>
                                                                 </div>
                                                             </td>
                                                         </tr>
                                                     </tbody>
                                                 </table>
+
+                                            <table
+                                            style=""
+                                            role="presentation"
+                                            cellpadding="0"
+                                            cellspacing="0"
+                                            width="100%"
+                                            border="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td
+                                                            style="
+                                                                overflow-wrap: break-word;
+                                                                word-break: break-word;
+                                                            "
+                                                        >
+                                                            <div
+                                                                style="
+                                                                    word-wrap: break-word;
+                                                                "
+                                                            >
+                                                                <div
+                                                                    style="
+                                                                        display: flex;
+                                                                    "
+                                                                >
+                                                                    <div style="
+                                                                        background: #e6e6e6;
+                                                                        border: 1px solid #c9c9c98a;
+                                                                        border-radius: 10px;
+                                                                        width:53%;
+                                                                        max-width:60%;
+                                                                        padding: 1.8rem 1.8rem 1.5rem 1.8rem;
+                                                                        margin-bottom: 1rem;
+                                                                        margin-top: 1.4rem;
+                                                                        margin-right: auto;
+                                                                        margin-left: auto;
+                                                                        /* padding: 1.5rem 2.3rem 1.3rem 2.3rem; */
+                                                                        text-align: center;
+                                                                    ">
+                                                                        <p style="
+                                                                            color: #34495e;
+                                                                            font-weight: bold;
+                                                                            margin-bottom: 0.8rem;
+                                                                            font-size: 16px;
+                                                                        ">
+                                                                            INFORMACI&Oacute;N DEL PEDIDO
+                                                                        </p>
+                                                                        <div style="font-size: 12px; color: #686d6d; line-height: 30.6px;">
+                                                                            <span style="
+                                                                            font-weight: bold;
+                                                                            ">
+                                                                            ID del Pedido:
+                                                                            </span> '.$idPedido.'<br>
+                                                                            <span style="
+                                                                            font-weight: bold;
+                                                                            ">
+                                                                            Cantidad de Productos:
+                                                                            </span> '.$cantidadProductos.'<br>
+                                                                            <span style="
+                                                                            font-weight: bold;
+                                                                            ">
+                                                                            Precio Total:
+                                                                            </span> $ '.$precioTotal.'<br>
+                                                                            <span style="
+                                                                            font-weight: bold;
+                                                                            ">
+                                                                            Pedido Realizado:
+                                                                            </span> <div>'.$fechaRealizado.'</div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+
                                                 <table
                                                 style=""
                                                 role="presentation"
@@ -1036,7 +1112,7 @@ private function msjConfirmacionCompra() {
                                                                         
                                                                         color: #787e7e;
                                                                     "
-                                                                    >Para consultar la información de tu compra, puedes hacerlo a través del panel de control de tu cuenta, presionando click en tu nombre en la barra superior del sitio.</p>
+                                                                    >Puedes consultar toda la informaci&oacute;n de tu pedido a trav&eacute;s de la secci&oacute;n de compras en el panel de control de tu cuenta, presionando sobre tu nombre en la barra superior del sitio.</p>
                                                                 </p>
                                                                 <p
                                                                     style="
@@ -1095,7 +1171,7 @@ private function msjConfirmacionCompra() {
                                                                                             line-height: 36.4px;
                                                                                             font-size: 21px;
                                                                                         "
-                                                                            >¡Te invitamos a que continues echando un vistazo!</span>
+                                                                            >&iexcl;Te invitamos a que continues echando un vistazo!</span>
                                                                         </p>
                                                                     </div>
                                                                 </td>
@@ -1287,8 +1363,8 @@ private function msjConfirmacionCompra() {
                                                                                             line-height: 33.6px;
                                                                                             font-size: 24px;
                                                                                         "
-                                                                                        >¿Por
-                                                                                        que
+                                                                                        >&iquest;Por
+                                                                                        qu&eacute;
                                                                                         no
                                                                                         nos
                                                                                         recomiendas
@@ -1518,8 +1594,7 @@ private function msjConfirmacionCompra() {
             <!--[if mso]></div><![endif]-->
             <!--[if IE]></div><![endif]-->
         </body>
-    </html>
-    ';
+    </html>';
 }
 // FIN Método que devuelve el mensaje de correo para confirmar compra. ================================================
 }

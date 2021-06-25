@@ -14,7 +14,8 @@ class Pedido extends Model
         'emailComprador',
         'idEnvio',
         'cantidadTotal',
-        'precioTotal'
+        'precioTotal',
+        'created_at'
     ];
 
     // Relación con comprador.

@@ -2,16 +2,18 @@
     @foreach(\Cart::getContent() as $item)
         <li class="list-group-item" style="background: #ffa500;">
             <div class="row">
-                <div class="col-lg-3">
+                <div class="col-lg-2 align-self-center">
                     <img src="{{asset($item->attributes->pathImage)}}"
-                         style="width: 50px; height: 50px;"
+                         class="img-fluid"
+                         width="40"
+                         height="40"
                     >
                 </div>
-                <div class="col-lg-6">
-                    <b>{{$item->name}}</b>
-                    <br><small>Cantidad: {{$item->quantity}}</small>
+                <div class="col-lg-7 text-truncate">
+                    <b style="">{{$item->name}}</b>
+                    <br><small style="">Cantidad: {{$item->quantity}}</small>
                 </div>
-                <div class="col-lg-3">
+                <div class="col-lg-3 text-center text-truncate p-0">                    
                     <p>${{ \Cart::get($item->id)->getPriceSum() }}</p>
                 </div>
                 <hr>
@@ -21,7 +23,7 @@
     <br>
     <li class="list-group-item" style="background: #ffe4b3;">
         <div class="row">
-            <div class="col-lg-9">
+            <div class="col-lg-9 text-truncate">
                 <b>Total: </b>${{ \Cart::getTotal() }}
             </div>
             <div class="col-lg-2">
