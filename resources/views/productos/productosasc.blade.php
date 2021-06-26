@@ -15,7 +15,7 @@ overflow-x: hidden;">
 
 <head>
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-    <link href="./css/styles.css" rel="stylesheet" id="bootstrap-css"> 
+    <link href="./css/styles.css" rel="stylesheet" id="bootstrap-css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     {{-- <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script> --}}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
@@ -79,7 +79,7 @@ overflow-x: hidden;">
                             <?php ;
                             }?>
                             <input type="image" class="pic-1" name="prodSelect" id="prodSelect" style="border-top-left-radius: 10px;  border-top-right-radius: 10px;" src={{asset($producto->rutaImagen)}}>
-                            <input type="hidden" id="codProd" name="codProd" value=<?php echo $producto->codigo ?>> @csrf
+                            <input type="hidden" id="codProd" name="codProd" value={{$producto->codigo}}> @csrf
                             <ul class="social">
                                 <button type="submit" value="Submit">
                                     <li><i class="fa fa-shopping-bag"></i></li>

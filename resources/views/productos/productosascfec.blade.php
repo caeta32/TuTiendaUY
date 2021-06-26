@@ -80,7 +80,7 @@ overflow-x: hidden;">
                             <?php ;
                             }?>
                             <input type="image" class="pic-1" name="prodSelect" id="prodSelect" style="border-top-left-radius: 10px;  border-top-right-radius: 10px;" src={{asset($producto->rutaImagen)}}>
-                            <input type="hidden" id="codProd" name="codProd" value=<?php echo $producto->codigo ?>> @csrf
+                            <input type="hidden" id="codProd" name="codProd" value={{$producto->codigo}}> @csrf
                             <ul class="social">
                                 <button type="submit" value="Submit">
                                     <li><i class="fa fa-shopping-bag"></i></li>

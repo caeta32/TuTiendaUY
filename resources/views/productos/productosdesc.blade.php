@@ -85,7 +85,7 @@ overflow-x: hidden;">
                             <?php ;
                             }?>
                             <input type="image" class="pic-1" name="prodSelect" id="prodSelect" style="border-top-left-radius: 10px;  border-top-right-radius: 10px;" src={{asset($producto->rutaImagen)}}>
-                            <input type="hidden" id="codProd" name="codProd" value=<?php echo $producto->codigo ?>> @csrf
+                            <input type="hidden" id="codProd" name="codProd" value={{$producto->codigo}}> @csrf
                             <ul class="social">
                                 <button type="submit" value="Submit">
                                     <li><i class="fa fa-shopping-bag"></i></li>
@@ -137,9 +137,9 @@ overflow-x: hidden;">
     </div>
 </div>
 </body>
-{{-- FIN MODAL --}} 
-{{-- ================================================================= --}} 
-{{-- ================================================================= --}} 
+{{-- FIN MODAL --}}
+{{-- ================================================================= --}}
+{{-- ================================================================= --}}
 {{-- Script JS para obtener datos para el modal del añadir al carrito --}}
 <script type="text/javascript">
     var modalAddToCart = document.getElementById('addToCart');
@@ -173,9 +173,9 @@ overflow-x: hidden;">
         fieldPrecio.value = parseFloat(precio);
         fieldRutaImagen.value = rutaImagen;
     });
-</script> 
-{{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}} 
-{{-- ================================================================= --}} 
+</script>
+{{-- FIN - Script JS para obtener datos para el modal del añadir al carrito --}}
+{{-- ================================================================= --}}
 </body>
 
 </html>

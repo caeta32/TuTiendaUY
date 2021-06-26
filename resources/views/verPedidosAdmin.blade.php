@@ -26,19 +26,19 @@ $prods = DB::table('pedidos')->get();
             </div>
         </div>
     </div> @endif @endif
-<form enctype="multipart/form-data" action="" method="POST"> @csrf
+<form enctype="multipart/form-data" action="{{ route('verPedidosAdminController') }}" method="POST"> @csrf
     <article class="card-body mx-auto" style="max-width: 1000px; margin-top: -3%;">
         <h4 class="card-title mt-3 text-center">Pedidos</h4>
         <div class="form-group input-group">
             <div class="input-group-prepend"> <span class="input-group-text"> <i class="fa fa-tag" aria-hidden="true"></i>
  </span> </div>
-            <select name="productoselect" type="text" class="form-control">
+            <select name="pedidoselect" type="text" class="form-control">
                 <?php
                 if(is_string($prods)) {
                     echo "<option value ='$prods''>" . $prods . "</option>";
                 } else {
                     foreach ($prods as $pedido) {
-                        echo "<option value ='$pedido->idEnvio''>" . $pedido->idEnvio . ' - '. $pedido->emailComprador . "</option>";
+                        echo "<option value ='$pedido->idEnvio'>" . $pedido->idEnvio . ' - '. $pedido->emailComprador . "</option>";
                     }
                 }
                 ?>
