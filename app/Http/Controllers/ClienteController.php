@@ -1027,7 +1027,6 @@ class ClienteController extends Controller
                                                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;"><tr><td style="" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="" style="height:49px; v-text-anchor:middle; width:158px;" arcsize="8%" stroke="f" fillcolor="#ffb200"><w:anchorlock/><center style="color:#FFFFFF;"><![endif]-->
                                                     <a
                                                         href="https://tutiendauy.herokuapp.com/"
-                                                        target="_blank"
                                                         style="
                                                                                 box-sizing: border-box;
                                                                                 display: inline-block;
