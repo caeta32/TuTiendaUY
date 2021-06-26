@@ -140,12 +140,16 @@
                                 </div>
                                 <ul class="list-group mt-4">
                                     <li class="list-group-item d-flex justify-content-between align-items-center shadow">
-                                        <strong>Precio Total:</strong><span>{{Arr::get($pedido, 'precioTotal')}}</span>
+                                        <strong>Precio Total:</strong><span>$ {{Arr::get($pedido, 'precioTotal')}}</span>
                                     </li>
                                 </ul>
                             </div>
                         </div>
-                        <hr>
+                        <div class="row justify-content-center align-items-center my-4">
+                            <div class="col-lg-11">
+                                <hr style="background: rgba(184, 183, 183, 0.514)">
+                            </div>
+                        </div>
                     @endforeach
                 </div>
             </div>            

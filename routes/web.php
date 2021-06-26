@@ -80,8 +80,8 @@ Route::view('/vender', 'ventas.formularioVender');
 
 Route::post("/publicar", [ProductoController::class, 'publicar'])->name('publicarController');
 
-Route::get('/publicar/{codigoProd}', function () {
-    return view('ventas.publicarProducto');
+Route::get('/publicar/{codigoProd}', function ($codigoProd) {
+    return view('ventas.publicarProducto')->with('codigoProd', $codigoProd);
 })->name('ventas.publicar');
 
 Route::get('/verVentas', [ClienteController::class, 'verVentasDeUsuario']);

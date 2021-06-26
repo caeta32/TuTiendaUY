@@ -33,12 +33,16 @@
 
                     <div class="row text-center mt-4">
                         <div class="col">
-                            <div>Para ver la publicación presione en el siguiente enlace:</div>
+                            <div>Para ver la publicación presione click en el siguiente botón:</div>
                         </div>
                     </div>
-                    <div class="row text-center mb-4 mt-2">
+                    <div class="row text-center mb-4 mt-4">
                         <div class="col">
-                            <a href="#" style="font-size: large;">Ver Publicación</a>
+                            <form action="{{ route('verDesdeInicioController') }}" method="POST">
+                                @csrf
+                                <input type="hidden" id="codProd" name="codProd" value="{{$codigoProd}}">
+                                <button class="btn btn-outline-success" type="submit" value="Submit">Ver Publicación</button>
+                            </form>
                         </div>
                     </div>
                 </div>
