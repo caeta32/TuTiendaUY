@@ -39,7 +39,7 @@
                         </div>
                         <div class="row justify-content-center text-center mt-4">
                             <div class="col-md-10">
-                                <p>Te hemos enviado un correo electrónico con todos los detalles de tu pedido y con los siguientes pasos a seguir.</p>
+                                <p>Te hemos enviado un correo electrónico con detalles de tu pedido y con los siguientes pasos a seguir.</p>
                             </div>
                         </div>
                         <div class="row justify-content-center">
@@ -50,7 +50,7 @@
 
                         <div class="row text-center mt-4">
                             <div class="col">
-                                <div>¡Te invitamos a continuar echando un vistazo!</div>
+                                <div>¡Te invitamos a que continúes echando un vistazo!</div>
                             </div>
                         </div>
                         <div class="row text-center mb-4 mt-2">

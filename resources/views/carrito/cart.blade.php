@@ -118,7 +118,15 @@
                                             <div class="col-lg-7">
                                                 <p>
                                                     {{-- <b><a href="/shop/{{ $item->attributes->slug }}">{{ $item->name }}Nombre</a></b><br> --}}
-                                                    <b>{{ $item->name }}</b><br>
+                                                    <form action="{{ route('verDesdeInicioController') }}" method="POST">
+                                                        @csrf
+                                                        <div class="row">
+                                                            <input type="hidden" id="codProd" name="codProd" value="{{$item->id}}">
+                                                            <div class="col-sm">
+                                                                <button class="btn btn-link p-0 mb-2" type="submit" value="Submit"><b>{{ $item->name }}</b></button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
                                                     <b>Precio: </b>{{ $item->price }}<br>
                                                     <b>Sub Total: </b>{{ \Cart::get($item->id)->getPriceSum() }}<br>
                                                     {{--                                <b>With Discount: </b>${{ \Cart::get($item->id)->getPriceSumWithConditions() }}--}}

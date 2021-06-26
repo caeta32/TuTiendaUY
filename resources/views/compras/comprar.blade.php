@@ -109,10 +109,10 @@
                                                                             @endphp
                                                                             {{-- ---------------------------------------- --}}
                                                                             <div class="row justify-content-start align-items-center px-3">
-                                                                                <div class="col-lg-2">
+                                                                                <div class="col-sm-2 col-md-2 col-lg-2">
                                                                                     <img src="{{ asset(Arr::get($item, 'pathImage')) }}" class="img-fluid rounded" width="80" height="80" alt="imagen del producto">
                                                                                 </div>
-                                                                                <div class="col-lg-9">
+                                                                                <div class="col-sm-9 col-md-9 col-lg-9">
                                                                                     <div>
                                                                                         <b>{{ Arr::get($item, 'name') }}</b><br>
                                                                                         <b>Precio: </b>$ {{ Arr::get($item, 'price') }}<br>
