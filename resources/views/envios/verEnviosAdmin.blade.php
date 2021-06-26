@@ -2,8 +2,10 @@
 use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Session;
 
-$prods = DB::table('productos')->get();
-
+$prods = DB::table('pedidos')
+    ->join('envios_en_esperas', 'pedidos.idEnvio', '=', 'envios_en_esperas.idEnvio')
+    ->select('pedidos.emailComprador', 'envios_en_esperas.idEnvio')
+    ->get();
 ?>
     <!DOCTYPE html>
 <html>
@@ -26,26 +28,26 @@ $prods = DB::table('productos')->get();
             </div>
         </div>
     </div> @endif @endif
-<form enctype="multipart/form-data" action="{{ route('verGlobalController') }}" method="POST"> @csrf
+<form enctype="multipart/form-data" action="{{ route('despacharEnvioController') }}" method="POST"> @csrf
     <article class="card-body mx-auto" style="max-width: 1000px; margin-top: -3%;">
-        <h4 class="card-title mt-3 text-center">Productos</h4>
+        <h4 class="card-title mt-3 text-center">Envios en Espera</h4>
         <div class="form-group input-group">
             <div class="input-group-prepend"> <span class="input-group-text"> <i class="fa fa-tag" aria-hidden="true"></i>
  </span> </div>
-            <select name="productoselect" type="text" class="form-control">
+            <select name="envioselect" type="text" class="form-control">
                 <?php
                 if(is_string($prods)) {
                     echo "<option value ='$prods''>" . $prods . "</option>";
                 } else {
-                    foreach ($prods as $producto) {
-                        echo "<option value ='$producto->nombre''>" . $producto->nombre . "</option>";
+                    foreach ($prods as $envio) {
+                        echo "<option value ='$envio->idEnvio'>" . 'Envio numero: ' . $envio->idEnvio. ' - Mail del Comprador: '. $envio->emailComprador . "</option>";
                     }
                 }
                 ?>
             </select>
         </div>
         <div class="form-group">
-            <button id="btnFetch" type="submit" class="btn btn-primary btn-block"> Ver Detalle </button>
+            <button id="btnFetch" type="submit" class="btn btn-success btn-block"> Despachar </button>
         </div>
     </article>
 </form>

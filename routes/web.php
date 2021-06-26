@@ -98,7 +98,12 @@ Route::post('/comprar', [ProductoController::class, 'comprar'])->name('comprar')
 
 Route::view('/compra-exitosa', 'compras.compraOK');
 
+
+
 Route::get('/verPedidos', [ClienteController::class, 'verPedidosDeUsuario']);
+Route::post('/verPedidosAdmin', [ClienteController::class, 'verPedidosDesdeAdmin'])->name('verPedidosAdminController');
+Route::view('/pedidosadmin', 'verPedidosAdmin');
+
 
 Route::view('/compras-not-found', 'compras.comprasNotFound');
 // Fin compras =============================================================
@@ -163,6 +168,13 @@ Route::post('/cart-clear', [CartController::class, 'clear'])->name('cart.clear')
 Route::view('/cart', 'carrito.cart')->name('cart');
 // Fin Carrito =============================================================
 
+// Envios Admin ============================================================
+
+Route::view('/enviosAdmin', 'envios.verEnviosAdmin');
+Route::post("/despacharEnvio", [ClienteController::class, 'despacharEnvio'])->name('despacharEnvioController');
+Route::view('/envioOK', 'envios.envioOK');
+
+// Fin Envios Admin ========================================================
 // Errores =====================================================================
 Route::view('/error', 'errores.error');
 // FIN Errores =====================================================================

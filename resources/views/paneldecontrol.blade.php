@@ -44,8 +44,8 @@ $mail = Session::get('usuario')['email'];
                     <div style="text-align: center">
                         <hr style=" width:75%; margin:0 auto;">
                         <a class="navbar-brand" href="{{ url('/verprodadmin') }}" target="miiframe" style=" font-size: large;">Productos</a>
-                        <a class="navbar-brand" href="{{ url('/verpedidosadmin') }}" target="miiframe" style=" font-size: large;">Pedidos</a>
-                        <a class="navbar-brand" href="{{ url('/verprod') }}" target="miiframe" style=" font-size: large;">Envios</a>
+                        <a class="navbar-brand" href="{{ url('/pedidosadmin') }}" target="miiframe" style=" font-size: large;">Pedidos</a>
+                        <a class="navbar-brand" href="{{ url('/enviosAdmin') }}" target="miiframe" style=" font-size: large;">Despachar Envios</a>
                     </div>
                 </article>
                 <iframe name="miiframe" frameborder="0" style="
