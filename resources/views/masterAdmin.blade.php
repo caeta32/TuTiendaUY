@@ -15,22 +15,6 @@ $mail = Session::get('usuario')['email'];
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        var framefenster = document.getElementsByTagName("iframe");
-        var auto_resize_timer = window.setInterval("autoresize_frames()", 0);
-
-        function autoresize_frames() {
-            for (var i = 0; i < framefenster.length; ++i) {
-                if (framefenster[i].contentWindow.document.body) {
-                    var framefenster_size = framefenster[i].contentWindow.document.body.offsetHeight;
-                    if (document.all && !window.opera) {
-                        framefenster_size = framefenster[i].contentWindow.document.body.scrollHeight;
-                    }
-                    framefenster[i].style.height = framefenster_size + 'px';
-                }
-            }
-        }
-    </script>
 </head>
 
 <body style="margin: 0; background-color: #F8F9FA; height: 100%;">

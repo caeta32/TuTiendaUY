@@ -34,7 +34,7 @@ overflow-x: hidden;">
 <?php ;
 } else {
 
-    ?><br>
+    ?>
     <?php ;}?>
 <br>
 <br>
@@ -83,7 +83,7 @@ overflow-x: hidden;">
                         {{-- POSIBLE CAMBIO POR BUG AL QUERER ABRIR DETALLE DE PRODUCTO --}}
                         {{-- <input type="hidden" id="codProd" name="codProd" value="{{$producto->codigo}}"> --}}
                         <input type="hidden" id="codProd" name="codProd" value=<?php echo $producto->codigo ?>>
-                        
+
                             @csrf
                         <ul class="social">
                             <button type="submit" value="Submit"><li><i class="fa fa-shopping-bag"></i></li></button>

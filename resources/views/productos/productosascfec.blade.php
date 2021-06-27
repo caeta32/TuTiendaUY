@@ -24,7 +24,7 @@ overflow-x: hidden;">
 
 <body style="background-color: #EBEBEB">
     @if ($mail == "administradores@tutienda.com")
-        @include('parciales.barraSuperiorAdmin')
+        @include('layouts.layoutAdmin')
     @else
         @include('parciales.barraSuperiorCliente')
     @endif
@@ -33,13 +33,12 @@ overflow-x: hidden;">
 <br>
 <?php if($mail!="administradores@tutienda.com") {
 ?>
-<br>
-<?php ;
+<br><br>
+    <?php ;
 } else {
 
-    ?><br>
+    ?>
 			<?php ;}?>
-<br>
 <br>
 <div>
     <h5 style="margin-left: 1%; position: absolute; margin-top: 0%;">&nbsp;Ordenar Por</h5>

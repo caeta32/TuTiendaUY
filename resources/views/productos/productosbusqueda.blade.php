@@ -21,7 +21,7 @@ overflow-x: hidden;">
 
 <body style="background-color: #EBEBEB">
     @if ($mail == "administradores@tutienda.com")
-        @include('parciales.barraSuperiorAdmin')
+        @include('layouts.layoutAdmin')
     @else
         @include('parciales.barraSuperiorCliente')
     @endif
