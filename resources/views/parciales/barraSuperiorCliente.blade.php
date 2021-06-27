@@ -1,3 +1,9 @@
+<?php
+use App\Http\Controllers\ClienteController;
+use Illuminate\Support\Facades\Session;
+$nombre = Session::get('usuario')['nombre'];
+$mail = Session::get('usuario')['email'];
+?>
 <div style="width: 100%; position: fixed; z-index: 9999999;">
     <form id="formid" action="{{ route('buscarController') }}"  method="POST">
         @csrf
