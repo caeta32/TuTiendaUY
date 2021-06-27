@@ -3,7 +3,8 @@ use App\Http\Controllers\ClienteController;
 use Illuminate\Support\Facades\Session;
 
 ?>
-@include('parciales.barraSuperiorCliente')
+@extends('layouts.masterCliente')
+
 @section('sectionCliente')
     <!DOCTYPE html>
 <html>
