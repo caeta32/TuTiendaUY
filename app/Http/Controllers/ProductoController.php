@@ -395,6 +395,11 @@ class ProductoController extends Controller
 
             // Finalización exitosa.
             DB::commit();
+            // En caso de sesr una compra desde el carrito, se vacía el mismo luego de
+            // finalizado el proceso de compra.
+            if($data['cartBool'] === 'true')
+                \Cart::clear();
+            // Se envía mail de compra y se controla en caso de que ocurra algún problema.
             if(! $this->enviarCorreoDeCompra($usuario->email, $pedido->id, $pedido->cantidadTotal, $pedido->precioTotal, $pedido->created_at)) {
                 throw new Exception('failed mail compra');
             }

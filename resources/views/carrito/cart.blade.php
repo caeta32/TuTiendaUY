@@ -69,7 +69,7 @@
                         {{-- ========================================================= --}}
 
                         <div class="row justify-content-center">
-                            <div class="col-lg-7">
+                            <div class="col-11 col-sm-12 col-md-11 col-lg-7">
                                 <br>
                                 @if(\Cart::getTotalQuantity()>0)
                                     <h4>Hay {{ \Cart::getTotalQuantity()}} Producto/s en tu carrito</h4><br>
@@ -111,18 +111,18 @@
                                                 @endif
                                             @endforeach
                                         @endif
-                                        <div class="row">
-                                            <div class="col-lg-3">
+                                        <div class="row justify-content-center">
+                                            <div class="col-3 col-sm-3 col-md-2 col-lg-3">
                                                 <img src="{{ asset($item->attributes->pathImage) }}" class="img-thumbnail" width="200" height="200" alt="imagen del producto">
                                             </div>
-                                            <div class="col-lg-7">
+                                            <div class="col-9 col-sm-8 col-md-8 col-lg-7 ">
                                                 <p>
                                                     {{-- <b><a href="/shop/{{ $item->attributes->slug }}">{{ $item->name }}Nombre</a></b><br> --}}
                                                     <form action="{{ route('verDesdeInicioController') }}" method="POST">
                                                         @csrf
                                                         <div class="row">
                                                             <input type="hidden" id="codProd" name="codProd" value="{{$item->id}}">
-                                                            <div class="col-sm">
+                                                            <div class="col-11 col-sm-12 col-md-12 col-lg-12 text-truncate">
                                                                 <button class="btn btn-link p-0 mb-2" type="submit" value="Submit"><b>{{ $item->name }}</b></button>
                                                             </div>
                                                         </div>
@@ -135,25 +135,27 @@
                                                         <div class="form-group row">
                                                             <input type="hidden" value="{{$item->id}}" id="id" name="id">
                                                             <input type="hidden" value="{{$item->name}}" id="name" name="name">
-                                                            <label for="quantity" class="col-sm-auto form-control-label">
+                                                            <label for="quantity" class="col-auto col-sm-auto col-md-auto col-lg-auto form-control-label m-0">
                                                                 <strong>Cantidad:</strong>
                                                             </label>
-                                                            <input type="number" class="form-control form-control-sm mr-0" value="{{$item->quantity}}" id="quantity" name="quantity" style="width: 70px; margin-right: 10px;">
-                                                            <div class="col-sm">
-                                                                <button class="btn btn-secondary btn-sm" style="margin-right: 25px;"><i class="fa fa-edit"></i>  Editar</button>
+                                                            <div class="col-4 col-sm-3 col-md-3 col-lg-3">
+                                                                <input type="number" class="form-control form-control-sm" value="{{$item->quantity}}" id="quantity" name="quantity">
+                                                            </div>
+                                                            <div class="col-3 col-sm-auto col-md-auto col-lg-auto">
+                                                                <button class="btn btn-secondary btn-sm"><i class="fa fa-edit"></i>  Editar</button>
                                                             </div>
                                                         </div>
                                                     </form>
                                                 </p>
                                             </div>
-                                            <div class="col-lg-2">
-                                                <div class="row justify-content-end">
-                                                    <div class="col-sm-auto">
+                                            <div class="col-auto col-sm-auto col-md-2 col-lg-2 p-0 ">
+                                                <div class="row justify-content-center">
+                                                    <div class="col-auto col-sm-auto col-md-auto col-lg-auto p-0 ">
                                                         <form action="{{ route('cart.remove') }}" method="POST">
                                                             @csrf
                                                             <input type="hidden" value="{{$item->id}}" id="id" name="id">
-                                                            <div class="col">
-                                                                <button class="btn btn-dark btn-sm" style="margin-right: 10px;"><i class="fa fa-trash"></i>  Eliminar</button>
+                                                            <div class="col-auto col-sm-auto col-md-auto col-lg-auto p-0 ">
+                                                                <button class="btn btn-dark btn-sm" style="font-size: 12px"><i class="fa fa-trash "></i>  Eliminar</button>
                                                             </div>
                                                         </form>
                                                     </div>

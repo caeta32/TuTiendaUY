@@ -201,6 +201,7 @@
                                                 $data['totalPrice'] = $orderData['totalPrice'];
                                                 $data['shippingPrice'] = $orderData['shippingPrice'];
                                                 $data['totalQuantity'] = $orderData['totalQuantity'];
+                                                $data['cartBool'] = $orderData['cartBool'];
 
                                                 $dataToSend = json_encode($data);
                                                 $productsToSend = implode("|", $products);
