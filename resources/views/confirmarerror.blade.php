@@ -11,6 +11,7 @@
     <div class="card bg-light" style="max-width: 500px;margin: 0 auto; float: none;">
         <article class="card-body mx-auto" style="max-width: 1000px;">
             <div style="text-align: center;">
+			
                 <a class="navbar-brand" href="{{url(" / ") }}" style=" color: white; margin-top: 2%; margin-left: 6%; border:1px solid black; padding: 7px"><img alt="Qries" height="64" src="./img/logo.png" width="64"></a> <b style="font-size: large">TuTienda</b> </div>
             <br>
             <div class="alert alert-danger" role="alert" style="text-align: center; width: 90%; margin: 0 auto;"> Codigo incorrecto, intente nuevamente. </div>
